@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="288dp"
+    android:layout_height="400dp"
+    android:scaleX="1"
+    android:scaleY="1"
+    android:id="@+id/cardRaw">
+
+    <ImageView
+        android:id="@+id/cardFrame"
+        android:layout_width="288dp"
+        android:layout_height="400dp"
+        android:src="@drawable/card_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498" />
+
+    <ImageView
+        android:id="@+id/cardImage"
+        android:layout_width="240dp"
+        android:layout_height="168dp"
+        android:src="@drawable/pokemon_venusaur"
+        app:layout_constraintBottom_toBottomOf="@+id/cardFrame"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toTopOf="@+id/cardFrame"
+        app:layout_constraintVertical_bias="0.17" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:fontFamily="@font/gill_sans_bold"
+        android:textColor="@color/black"
+        android:text="Name"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardFrame"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toTopOf="@+id/cardFrame"
+        app:layout_constraintVertical_bias="0.03" />
+
+    <TextView
+        android:id="@+id/flavor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flavor"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="2dp"
+        android:textSize="8sp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:id="@+id/abilityIcon"
+        android:layout_width="40sp"
+        android:layout_height="20sp"
+        android:src="@drawable/ability"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:scaleY="1.5"
+        android:scaleX="1.5"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <TextView
+        android:id="@+id/ability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:text="Ability"
+        android:textColor="@color/red"
+        android:textSize="12sp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/abilityIcon"
+        app:layout_constraintStart_toEndOf="@+id/abilityIcon"
+        app:layout_constraintTop_toTopOf="@+id/abilityIcon" />
+
+    <ImageView
+        android:id="@+id/buttonHP"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="43dp"
+        android:src="@drawable/attribute_selection_off"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/buttonATK"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="58dp"
+        android:src="@drawable/attribute_selection_off"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/buttonDEF"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="73dp"
+        android:src="@drawable/attribute_selection_off"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/buttonSPATK"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="88dp"
+        android:src="@drawable/attribute_selection_off"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/buttonSPDEF"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="103dp"
+        android:src="@drawable/attribute_selection_off"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/buttonSPD"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="118dp"
+        android:src="@drawable/attribute_selection_off"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <TextView
+        android:id="@+id/attribute1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="HP"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/abilityIcon" />
+
+    <TextView
+        android:id="@+id/attribute2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="Attack"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/attribute1" />
+
+    <TextView
+        android:id="@+id/attribute3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="Defense"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/attribute2" />
+
+    <TextView
+        android:id="@+id/attribute4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="Special Attack"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/attribute3" />
+
+    <TextView
+        android:id="@+id/attribute5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="Special Defense"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/attribute4" />
+
+    <TextView
+        android:id="@+id/attribute6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="Speed"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/attribute5" />
+
+    <TextView
+        android:id="@+id/hp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="HP"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/abilityIcon" />
+
+    <TextView
+        android:id="@+id/atk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="ATK"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/hp" />
+
+    <TextView
+        android:id="@+id/def"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="DEF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/atk" />
+
+    <TextView
+        android:id="@+id/spatk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="SPATK"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/def" />
+
+    <TextView
+        android:id="@+id/spdef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="SPDEF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/spatk" />
+
+    <TextView
+        android:id="@+id/spd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="SPD"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/spdef" />
+
+    <TextView
+        android:id="@+id/wks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="25dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="Weakness"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame" />
+
+    <ImageView
+        android:id="@+id/weakness"
+        android:layout_width="12sp"
+        android:layout_height="12sp"
+        android:src="@drawable/type_normal"
+        app:layout_constraintBottom_toBottomOf="@+id/cardFrame"
+        app:layout_constraintStart_toEndOf="@+id/wks"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="25dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

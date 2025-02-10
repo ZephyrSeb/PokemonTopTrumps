@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityResult"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:clipToPadding="false">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:background="@drawable/gray_background"
+        android:elevation="8dp"
+        android:shadowRadius="32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/red_line"
+        android:layout_marginTop="-64dp"
+        android:scaleY="0.75"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Results"
+        android:textSize="48sp"
+        android:fontFamily="@font/gill_sans_bold"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:elevation="8dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/winner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Winner"
+        android:textSize="32sp"
+        android:fontFamily="@font/gill_sans_bold"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:elevation="8dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result"/>
+
+    <ImageView
+        android:id="@+id/stat1"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/empty_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/turnOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:gravity="center"
+        android:text="Turn order"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/stat1"
+        app:layout_constraintEnd_toEndOf="@+id/stat1"
+        app:layout_constraintStart_toStartOf="@+id/stat1"
+        app:layout_constraintTop_toTopOf="@+id/stat1" />
+
+    <TextView
+        android:id="@+id/turnOrderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textSize="20sp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:gravity="left"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/stat1"
+        app:layout_constraintTop_toTopOf="@+id/stat1"
+        app:layout_constraintBottom_toBottomOf="@+id/stat1"/>
+
+    <ImageView
+        android:id="@+id/stat2"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/empty_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat1" />
+
+    <TextView
+        android:id="@+id/finalScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:gravity="center"
+        android:text="Final score"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/stat2"
+        app:layout_constraintEnd_toEndOf="@+id/stat2"
+        app:layout_constraintStart_toStartOf="@+id/stat2"
+        app:layout_constraintTop_toTopOf="@+id/stat2" />
+
+    <TextView
+        android:id="@+id/finalScoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textSize="20sp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:gravity="left"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/stat2"
+        app:layout_constraintTop_toTopOf="@+id/stat2"
+        app:layout_constraintBottom_toBottomOf="@+id/stat2"/>
+
+    <ImageView
+        android:id="@+id/stat3"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/empty_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat2" />
+
+    <TextView
+        android:id="@+id/rounds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:gravity="center"
+        android:text="Rounds played"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/stat3"
+        app:layout_constraintEnd_toEndOf="@+id/stat3"
+        app:layout_constraintStart_toStartOf="@+id/stat3"
+        app:layout_constraintTop_toTopOf="@+id/stat3" />
+
+    <TextView
+        android:id="@+id/roundsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textSize="20sp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:gravity="left"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/stat3"
+        app:layout_constraintTop_toTopOf="@+id/stat3"
+        app:layout_constraintBottom_toBottomOf="@+id/stat3"/>
+
+    <ImageView
+        android:id="@+id/stat4"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/empty_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat3" />
+
+    <TextView
+        android:id="@+id/highAttribute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:gravity="center"
+        android:text="Highest damage"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/stat4"
+        app:layout_constraintEnd_toEndOf="@+id/stat4"
+        app:layout_constraintStart_toStartOf="@+id/stat4"
+        app:layout_constraintTop_toTopOf="@+id/stat4" />
+
+    <TextView
+        android:id="@+id/highAttributeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textSize="20sp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:gravity="left"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/stat4"
+        app:layout_constraintTop_toTopOf="@+id/stat4"
+        app:layout_constraintBottom_toBottomOf="@+id/stat4"/>
+
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="Continue"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activityGame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleX="1"
+    android:scaleY="1"
+    android:background="@drawable/background_gradient">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/battle_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textYou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="You"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textOpponent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:text="Opponent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/score1"
+        android:layout_width="144dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/score_tileable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/score2"
+        android:layout_width="144dp"
+        android:layout_height="24dp"
+        android:background="@drawable/score_tileable"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="256dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/text_box"
+        android:elevation="8dp"
+        android:shadowRadius="32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toast"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:text="TEXT"
+        android:gravity="center"
+        android:elevation="8dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:layout_marginTop="72dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/card"
+        layout="@layout/card_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/opponentCard"
+        layout="@layout/card_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/p1Burst"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:src="@drawable/weakness_burst"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"
+        android:translationX="110dp"
+        android:translationY="70dp"/>
+
+    <ImageView
+        android:id="@+id/p2Burst"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:src="@drawable/weakness_burst"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"
+        android:translationX="-110dp"
+        android:translationY="-110dp"/>
+
+    <include
+        android:id="@+id/itemCard"
+        android:layout_width="288dp"
+        android:layout_height="400dp"
+        layout="@layout/card_layout_item"
+        android:layout_marginStart="-64dp"
+        android:layout_marginBottom="-48dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <include
+        android:id="@+id/itemCardOpponent"
+        android:layout_width="288dp"
+        android:layout_height="400dp"
+        layout="@layout/card_layout_item"
+        android:layout_marginStart="-64dp"
+        android:layout_marginTop="-48dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/itemButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/button"
+        android:elevation="8dp"
+        android:padding="1dp"
+        android:shadowRadius="32"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/icon_item_black"
+        android:translationZ="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/itemButton"
+        app:layout_constraintEnd_toEndOf="@+id/itemButton"
+        app:layout_constraintStart_toStartOf="@+id/itemButton"
+        app:layout_constraintTop_toTopOf="@+id/itemButton" />
+
+    <ImageView
+        android:id="@+id/itemAlert"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:elevation="8dp"
+        android:background="@drawable/icon_alert"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="@+id/itemButton"
+        app:layout_constraintEnd_toEndOf="@+id/itemButton" />
+
+    <ImageView
+        android:id="@+id/megaEvolutionButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:backgroundTint="@color/buttonDefault"
+        android:shadowDx="64"
+        android:shadowDy="64"
+        android:shadowRadius="64"
+        android:src="@drawable/icon_mega_evolution_black"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/button"
+        android:elevation="8dp"
+        android:shadowRadius="32"
+        android:text="Submit"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/burst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/battle_burst"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/p1Attribute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:textSize="32sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationX="75dp"
+        android:translationY="-25dp"/>
+
+    <TextView
+        android:id="@+id/p2Attribute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:textSize="32sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationX="-75dp"
+        android:translationY="25dp"/>
+
+    <ImageView
+        android:id="@+id/prizePot"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/icon_pokeball_color"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="8dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/prizePotText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x2"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="16dp"
+        android:textColor="@color/dark_gray"
+        android:gravity="end"
+        android:layout_marginTop="116dp"
+        android:layout_marginRight="8dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/turnBannerRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/turn_prompt_red"
+        android:scaleY="0.75"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/turnBannerRedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your turn"
+        android:fontFamily="@font/gill_sans_bold"
+        android:textSize="32sp"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"/>
+
+    <ImageView
+        android:id="@+id/turnBannerBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/turn_prompt_blue"
+        android:scaleY="0.75"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/turnBannerBlueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Opponent's turn"
+        android:fontFamily="@font/gill_sans_bold"
+        android:textSize="32sp"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"/>
+
+    <ImageView
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleY="0.5"
+        android:background="@drawable/red_line"
+        android:elevation="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bannerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Victory"
+        android:elevation="8dp"
+        android:fontFamily="@font/gill_sans_bold"
+        android:textSize="56sp"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
