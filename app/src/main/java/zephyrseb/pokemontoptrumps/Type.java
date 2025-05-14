@@ -43,6 +43,9 @@ public class Type {
     public static Type STEEL = new Type("Steel");
     public static Type DARK = new Type("Dark");
     public static Type FAIRY = new Type("Fairy");
+    public static Type ICE = new Type("Ice");
+    public static Type DRAGON = new Type("Dragon");
+    public static Type STELLAR = new Type("Stellar");
     public static void init() {
         NORMAL.setFrame(R.drawable.card_normal).setIcon(R.drawable.type_normal);
         FIRE.setFrame(R.drawable.card_fire).setIcon(R.drawable.type_fire);
@@ -55,6 +58,9 @@ public class Type {
         STEEL.setFrame(R.drawable.card_steel).setIcon(R.drawable.type_steel);
         DARK.setFrame(R.drawable.card_dark).setIcon(R.drawable.type_dark);
         FAIRY.setFrame(R.drawable.card_fairy).setIcon(R.drawable.type_fairy);
+        ICE.setFrame(R.drawable.card_ice).setIcon(R.drawable.type_ice);
+        DRAGON.setFrame(R.drawable.card_dragon).setIcon(R.drawable.type_dragon);
+        STELLAR.setFrame(R.drawable.card_stellar).setIcon(R.drawable.type_stellar);
     }
 
 }

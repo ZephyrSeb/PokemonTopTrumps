@@ -312,4 +312,181 @@
         android:layout_marginStart="4dp"
         android:layout_marginBottom="25dp" />
 
+    <ImageView
+        android:id="@+id/weaknessBurst"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/weakness_burst"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/cardFrame"
+        app:layout_constraintStart_toEndOf="@+id/weakness" />
+
+    <ImageView
+        android:id="@+id/statChange1_1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="@id/hp"
+        app:layout_constraintTop_toTopOf="@id/hp"/>
+
+    <ImageView
+        android:id="@+id/statChange1_2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_1"
+        app:layout_constraintTop_toTopOf="@id/hp"/>
+
+    <ImageView
+        android:id="@+id/statChange1_3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_2"
+        app:layout_constraintTop_toTopOf="@id/hp"/>
+
+    <ImageView
+        android:id="@+id/statChange2_1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="@id/atk"
+        app:layout_constraintTop_toTopOf="@id/atk"/>
+
+    <ImageView
+        android:id="@+id/statChange2_2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_1"
+        app:layout_constraintTop_toTopOf="@id/atk"/>
+
+    <ImageView
+        android:id="@+id/statChange2_3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_2"
+        app:layout_constraintTop_toTopOf="@id/atk"/>
+
+    <ImageView
+        android:id="@+id/statChange3_1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="@id/def"
+        app:layout_constraintTop_toTopOf="@id/def"/>
+
+    <ImageView
+        android:id="@+id/statChange3_2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_1"
+        app:layout_constraintTop_toTopOf="@id/def"/>
+
+    <ImageView
+        android:id="@+id/statChange3_3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_2"
+        app:layout_constraintTop_toTopOf="@id/def"/>
+
+    <ImageView
+        android:id="@+id/statChange4_1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="@id/spatk"
+        app:layout_constraintTop_toTopOf="@id/spatk"/>
+
+    <ImageView
+        android:id="@+id/statChange4_2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_1"
+        app:layout_constraintTop_toTopOf="@id/spatk"/>
+
+    <ImageView
+        android:id="@+id/statChange4_3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_2"
+        app:layout_constraintTop_toTopOf="@id/spatk"/>
+
+    <ImageView
+        android:id="@+id/statChange5_1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="@id/spdef"
+        app:layout_constraintTop_toTopOf="@id/spdef"/>
+
+    <ImageView
+        android:id="@+id/statChange5_2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_1"
+        app:layout_constraintTop_toTopOf="@id/spdef"/>
+
+    <ImageView
+        android:id="@+id/statChange5_3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_2"
+        app:layout_constraintTop_toTopOf="@id/spdef"/>
+
+    <ImageView
+        android:id="@+id/statChange6_1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="@id/spd"
+        app:layout_constraintTop_toTopOf="@id/spd"/>
+
+    <ImageView
+        android:id="@+id/statChange6_2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_1"
+        app:layout_constraintTop_toTopOf="@id/spd"/>
+
+    <ImageView
+        android:id="@+id/statChange6_3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/stat_raise"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/statChange1_2"
+        app:layout_constraintTop_toTopOf="@id/spd"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

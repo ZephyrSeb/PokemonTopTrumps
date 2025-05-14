@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button"
         android:shadowRadius="32"
-        android:text="Start Game"
+        android:text="Free Play"
         android:textColor="@color/black"
         android:fontFamily="@font/futura_medium_bt"
         android:translationZ="8dp"
@@ -35,6 +35,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/classicButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="Classic Mode"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        app:layout_constraintTop_toBottomOf="@id/startButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/rulesButton"
@@ -46,7 +60,44 @@
         android:textColor="@color/black"
         android:fontFamily="@font/futura_medium_bt"
         android:translationZ="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/startButton"
+        app:layout_constraintTop_toBottomOf="@+id/classicButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/collectionButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="Collection"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/rulesButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/empty_button"
+        android:shadowRadius="32"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:translationZ="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/settingsIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/icon_settings_black"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="@id/settingsButton"
+        app:layout_constraintBottom_toBottomOf="@id/settingsButton"
+        app:layout_constraintTop_toTopOf="@id/settingsButton"
+        app:layout_constraintStart_toStartOf="@id/settingsButton"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

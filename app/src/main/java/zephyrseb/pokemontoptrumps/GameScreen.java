@@ -1,5 +1,6 @@
 package zephyrseb.pokemontoptrumps;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,10 +25,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 public class GameScreen extends AppCompatActivity {
     private int turn;
+    private Player activePlayer;
     private int startingPlayer;
     private int prizePot = 1;
     private String choice = "";
@@ -36,11 +39,13 @@ public class GameScreen extends AppCompatActivity {
     private int round = 0;
     private int highestStat = 0;
     private int selectedItem = -1;
-    private String highestStatName = "";
     private String chosenAttribute = "";
-    private Card cardP1;
-    private Card cardP2;
     private boolean newItem = false;
+    private FieldEffect fieldEffect = FieldEffect.NONE;
+    private PriorityQueue<EffectAction> effectQueue = new PriorityQueue<>(new EffectComparator());
+    private String mode;
+    private boolean goalLarge = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +55,12 @@ public class GameScreen extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            mode = extras.getString("mode");
+        }
         Player player1 = new Player("Player");
-        Player player2 = new Player("CPU");
+        Player player2 = new Player(generateTrainerName());
         Random rand = new Random();
         turn = rand.nextInt(2);
         startingPlayer = turn;
@@ -69,45 +78,181 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void initializeDeck(Player player) {
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_venusaur), R.drawable.pokemon_venusaur, Type.GRASS, Ability.OVERGROW, 80, 82, 83, 100, 100, 80, Type.FIRE, getResources().getString(R.string.pokemon_flavor_venusaur), new Card(getResources().getString(R.string.pokemon_name_mega_venusaur), R.drawable.pokemon_mega_venusaur, Type.GRASS, null, 80, 100, 123, 122, 120, 80, Type.FIRE, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_charizard), R.drawable.pokemon_charizard, Type.FIRE, Ability.BLAZE, 78, 84, 78, 109, 85, 100, Type.WATER, getResources().getString(R.string.pokemon_flavor_charizard), new Card(getResources().getString(R.string.pokemon_name_mega_charizard_x), R.drawable.pokemon_mega_charizard_x, Type.FIRE, null, 78, 130, 111, 130, 85, 100, Type.WATER, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_blastoise), R.drawable.pokemon_blastoise, Type.WATER, Ability.TORRENT, 79, 83, 100, 85, 105, 78, Type.ELECTRIC, getResources().getString(R.string.pokemon_flavor_blastoise), new Card(getResources().getString(R.string.pokemon_name_mega_blastoise), R.drawable.pokemon_mega_blastoise, Type.WATER, null, 79, 103, 120, 135, 115, 78, Type.ELECTRIC, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_gardevoir), R.drawable.pokemon_gardevoir, Type.FAIRY, null, 68, 65, 65, 125, 115, 80, Type.STEEL, getResources().getString(R.string.pokemon_flavor_gardevoir), new Card(getResources().getString(R.string.pokemon_name_mega_gardevoir), R.drawable.pokemon_mega_gardevoir, Type.FAIRY, null, 68, 85, 65, 165, 135, 100, Type.STEEL, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_gallade), R.drawable.pokemon_gallade, Type.FIGHTING, null, 68, 125, 65, 65, 115, 80, Type.DARK, getResources().getString(R.string.pokemon_flavor_gallade), new Card(getResources().getString(R.string.pokemon_name_mega_gallade), R.drawable.pokemon_mega_gallade, Type.FIGHTING, null, 68, 165, 95, 65, 115, 110, Type.DARK, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_gyarados), R.drawable.pokemon_gyarados, Type.WATER, null, 95, 125, 79, 60, 100, 81, Type.ELECTRIC, getResources().getString(R.string.pokemon_flavor_gyarados), new Card(getResources().getString(R.string.pokemon_name_mega_gyarados), R.drawable.pokemon_mega_gyarados, Type.WATER, Ability.MOLD_BREAKER, 95, 155, 109, 70, 130, 81, Type.ELECTRIC, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_lucario), R.drawable.pokemon_lucario, Type.FIGHTING, null, 70, 110, 70, 115, 70, 90, Type.FIRE, getResources().getString(R.string.pokemon_flavor_lucario), new Card(getResources().getString(R.string.pokemon_name_mega_lucario), R.drawable.pokemon_mega_lucario, Type.FIGHTING, null, 70, 145, 88, 140, 70, 112, Type.FIRE, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_sceptile), R.drawable.pokemon_sceptile, Type.GRASS, Ability.OVERGROW, 70, 85, 65, 105, 85, 120, Type.FIRE, getResources().getString(R.string.pokemon_flavor_sceptile), new Card(getResources().getString(R.string.pokemon_name_mega_sceptile), R.drawable.pokemon_mega_sceptile, Type.GRASS, null, 70, 110, 75, 145, 85, 145, Type.FIRE, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_blaziken), R.drawable.pokemon_blaziken, Type.FIRE, Ability.BLAZE, 80, 120, 70, 110, 70, 80, Type.WATER, getResources().getString(R.string.pokemon_flavor_blaziken), new Card(getResources().getString(R.string.pokemon_name_mega_blaziken), R.drawable.pokemon_mega_blaziken, Type.FIRE, null, 80, 160, 80, 130, 80, 100, Type.WATER, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_swampert), R.drawable.pokemon_swampert, Type.WATER, Ability.TORRENT, 100, 110, 90, 85, 90, 60, Type.GRASS, getResources().getString(R.string.pokemon_flavor_swampert), new Card(getResources().getString(R.string.pokemon_name_mega_swampert), R.drawable.pokemon_mega_swampert, Type.WATER, null, 100, 150, 110, 95, 110, 70, Type.GRASS, "")));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_snorlax), R.drawable.pokemon_snorlax, Type.NORMAL, null, 160, 110, 65, 65, 110, 30, Type.FIGHTING, getResources().getString(R.string.pokemon_flavor_snorlax)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_spinda), R.drawable.pokemon_spinda, Type.NORMAL, null, 60, 60, 60, 60, 60, 60, Type.FIGHTING, getResources().getString(R.string.pokemon_flavor_spinda)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_mew), R.drawable.pokemon_mew, Type.PSYCHIC, null, 100, 100, 100, 100, 100, 100, Type.DARK, getResources().getString(R.string.pokemon_flavor_mew)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_corviknight), R.drawable.pokemon_corviknight, Type.STEEL, null, 98, 87, 105, 53, 85, 67, Type.FIRE, getResources().getString(R.string.pokemon_flavor_corviknight)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_ditto), R.drawable.pokemon_ditto, Type.NORMAL, Ability.TRANSFORM, 48, 48, 48, 48, 48, 48, Type.FIGHTING, getResources().getString(R.string.pokemon_flavor_ditto)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_flygon), R.drawable.pokemon_flygon, Type.NORMAL, null, 80, 100, 80, 80, 80, 100, Type.FAIRY, getResources().getString(R.string.pokemon_flavor_flygon)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_froslass), R.drawable.pokemon_froslass, Type.WATER, null, 70, 80, 70, 80, 70, 110, Type.DARK, getResources().getString(R.string.pokemon_flavor_froslass)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_glimmora), R.drawable.pokemon_glimmora, Type.GROUND, null, 83, 55, 90, 130, 81, 86, Type.WATER, getResources().getString(R.string.pokemon_flavor_glimmora)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_ludicolo), R.drawable.pokemon_ludicolo, Type.WATER, null, 80, 70, 70, 90, 100, 70, Type.GRASS, getResources().getString(R.string.pokemon_flavor_ludicolo)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_machamp), R.drawable.pokemon_machamp, Type.FIGHTING, null, 90, 130, 80, 65, 85, 55, Type.PSYCHIC, getResources().getString(R.string.pokemon_flavor_machamp)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_raichu), R.drawable.pokemon_raichu, Type.ELECTRIC, null, 60, 90, 55, 90, 80, 110, Type.GROUND, getResources().getString(R.string.pokemon_flavor_raichu)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_slaking), R.drawable.pokemon_slaking, Type.NORMAL, Ability.TRUANT, 150, 160, 100, 95, 65, 100, Type.FIGHTING, getResources().getString(R.string.pokemon_flavor_slaking)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_talonflame), R.drawable.pokemon_talonflame, Type.FIRE, null, 78, 81, 71, 74, 69, 126, Type.WATER, getResources().getString(R.string.pokemon_flavor_talonflame)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_tinkaton), R.drawable.pokemon_tinkaton, Type.STEEL, null, 85, 75, 77, 70, 105, 94, Type.FIRE, getResources().getString(R.string.pokemon_flavor_tinkaton)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_unown), R.drawable.pokemon_unown, Type.PSYCHIC, Ability.HIDDEN_POWER, 48, 72, 48, 72, 48, 48, Type.DARK, getResources().getString(R.string.pokemon_flavor_unown)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_ursaluna), R.drawable.pokemon_ursaluna, Type.GROUND, null, 130, 140, 105, 45, 80, 50, Type.GRASS, getResources().getString(R.string.pokemon_flavor_ursaluna)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_wobuffet), R.drawable.pokemon_wobuffet, Type.PSYCHIC, null, 190, 33, 58, 33, 58, 33, Type.DARK, getResources().getString(R.string.pokemon_flavor_wobuffet)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_zoroark), R.drawable.pokemon_zoroark, Type.DARK, null, 60, 105, 60, 120, 60, 105, Type.FIGHTING, getResources().getString(R.string.pokemon_flavor_zoroark)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_pikachu), R.drawable.pokemon_pikachu, Type.ELECTRIC, null, 35, 55, 40, 50, 50, 90, Type.GROUND, getResources().getString(R.string.pokemon_flavor_pikachu)).setEvolve(true));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_manaphy), R.drawable.pokemon_manaphy, Type.WATER, Ability.HEART_SWAP, 100, 100, 100, 100, 100, 100, Type.ELECTRIC, getResources().getString(R.string.pokemon_flavor_manaphy)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_zigzagoon), R.drawable.pokemon_zigzagoon, Type.NORMAL, Ability.PICKUP, 38, 30, 41, 30, 41, 60, Type.FIGHTING, getResources().getString(R.string.pokemon_flavor_zigzagoon)).setEvolve(true));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_haxorus), R.drawable.pokemon_haxorus, Type.NORMAL, Ability.MOLD_BREAKER, 76, 147, 90, 60, 70, 97, Type.FAIRY, getResources().getString(R.string.pokemon_flavor_haxorus)));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_turtwig), R.drawable.pokemon_turtwig, Type.GRASS, Ability.OVERGROW, 55, 68, 64, 45, 55, 31, Type.FIRE, getResources().getString(R.string.pokemon_flavor_turtwig)).setEvolve(true));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_chimchar), R.drawable.pokemon_chimchar, Type.FIRE, Ability.BLAZE, 44, 58, 44, 58, 44, 61, Type.WATER, getResources().getString(R.string.pokemon_flavor_chimchar)).setEvolve(true));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_piplup), R.drawable.pokemon_piplup, Type.WATER, Ability.TORRENT, 53, 51, 53, 61, 56, 40, Type.ELECTRIC, getResources().getString(R.string.pokemon_flavor_piplup)).setEvolve(true));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_eevee), R.drawable.pokemon_eevee, Type.NORMAL, null, 55, 55, 50, 45, 65, 55, Type.FIGHTING, getResources().getString(R.string.pokemon_flavor_eevee)).setEvolve(true));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_porygon), R.drawable.pokemon_porygon, Type.NORMAL, Ability.DOWNLOAD, 65, 60, 70, 85, 75, 40, Type.FIGHTING, getResources().getString(R.string.pokemon_flavor_porygon)).setEvolve(true));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_murkrow), R.drawable.pokemon_murkrow, Type.DARK, Ability.SUPER_LUCK, 60, 85, 42, 85, 42, 91, Type.ELECTRIC, getResources().getString(R.string.pokemon_flavor_murkrow)).setEvolve(true));
-        player.addCard(new Card(getResources().getString(R.string.pokemon_name_ralts), R.drawable.pokemon_ralts, Type.PSYCHIC, Ability.TRACE, 28, 25, 25, 45, 35, 40, Type.STEEL, getResources().getString(R.string.pokemon_flavor_ralts)).setEvolve(true));
+        if (Objects.equals(mode, "free_play")) {
+            player.addCard(CardRegistry.VENUSAUR.clone());
+            player.addCard(CardRegistry.CHARIZARD.clone());
+            player.addCard(CardRegistry.BLASTOISE.clone());
+            player.addCard(CardRegistry.GARDEVOIR.clone());
+            player.addCard(CardRegistry.GALLADE.clone());
+            player.addCard(CardRegistry.GYARADOS.clone());
+            player.addCard(CardRegistry.LUCARIO.clone());
+            player.addCard(CardRegistry.SCEPTILE.clone());
+            player.addCard(CardRegistry.BLAZIKEN.clone());
+            player.addCard(CardRegistry.SWAMPERT.clone());
+            player.addCard(CardRegistry.SNORLAX.clone());
+            player.addCard(CardRegistry.SPINDA.clone());
+            player.addCard(CardRegistry.MEW.clone());
+            player.addCard(CardRegistry.CORVIKNIGHT.clone());
+            player.addCard(CardRegistry.DITTO.clone());
+            player.addCard(CardRegistry.FLYGON.clone());
+            player.addCard(CardRegistry.FROSLASS.clone());
+            player.addCard(CardRegistry.GLIMMORA.clone());
+            player.addCard(CardRegistry.LUDICOLO.clone());
+            player.addCard(CardRegistry.MACHAMP.clone());
+            player.addCard(CardRegistry.RAICHU.clone());
+            player.addCard(CardRegistry.SLAKING.clone());
+            player.addCard(CardRegistry.TALONFLAME.clone());
+            player.addCard(CardRegistry.TINKATON.clone());
+            player.addCard(CardRegistry.UNOWN.clone());
+            player.addCard(CardRegistry.URSALUNA.clone());
+            player.addCard(CardRegistry.WOBBUFFET.clone());
+            player.addCard(CardRegistry.ZOROARK.clone());
+            player.addCard(CardRegistry.PIKACHU.clone());
+            player.addCard(CardRegistry.MANAPHY.clone());
+            player.addCard(CardRegistry.ZIGZAGOON.clone());
+            player.addCard(CardRegistry.HAXORUS.clone());
+            player.addCard(CardRegistry.TURTWIG.clone());
+            player.addCard(CardRegistry.CHIMCHAR.clone());
+            player.addCard(CardRegistry.PIPLUP.clone());
+            player.addCard(CardRegistry.EEVEE.clone());
+            player.addCard(CardRegistry.PORYGON.clone());
+            player.addCard(CardRegistry.MURKROW.clone());
+            player.addCard(CardRegistry.RALTS.clone());
+            player.addCard(CardRegistry.ABOMASNOW.clone());
+            player.addCard(CardRegistry.HIPPOWDON.clone());
+            player.addCard(CardRegistry.TORKOAL.clone());
+            player.addCard(CardRegistry.PELIPPER.clone());
+            player.addCard(CardRegistry.ALTARIA.clone());
+            player.addCard(CardRegistry.CASTFORM.clone());
+            player.addCard(CardRegistry.GARCHOMP.clone());
+            player.addCard(CardRegistry.TROPIUS.clone());
+            player.addCard(CardRegistry.LUVDISC.clone());
+            player.addCard(CardRegistry.CHERRIM.clone());
+            player.addCard(CardRegistry.MALAMAR.clone());
+            player.addCard(CardRegistry.ROWLET.clone());
+            player.addCard(CardRegistry.DECIDUEYE.clone());
+            player.addCard(CardRegistry.LITTEN.clone());
+            player.addCard(CardRegistry.INCINEROAR.clone());
+            player.addCard(CardRegistry.POPPLIO.clone());
+            player.addCard(CardRegistry.PRIMARINA.clone());
+            player.addCard(CardRegistry.VIKAVOLT.clone());
+            player.addCard(CardRegistry.ARAQUANID.clone());
+            player.addCard(CardRegistry.WISHIWASHI.clone());
+            player.addCard(CardRegistry.LURANTIS.clone());
+            player.addCard(CardRegistry.SHIINOTIC.clone());
+            player.addCard(CardRegistry.PALOSSAND.clone());
+            player.addCard(CardRegistry.MINIOR_METEOR.clone());
+            player.addCard(CardRegistry.TOGEDEMARU.clone());
+            player.addCard(CardRegistry.MIMIKYU.clone());
+            player.addCard(CardRegistry.KOMMO_O.clone());
+            player.addCard(CardRegistry.TAPU_KOKO.clone());
+            player.addCard(CardRegistry.TAPU_LELE.clone());
+            player.addCard(CardRegistry.TAPU_BULU.clone());
+            player.addCard(CardRegistry.TAPU_FINI.clone());
+            player.addCard(CardRegistry.COSMOG.clone());
+            player.addCard(CardRegistry.SOLGALEO.clone());
+            player.addCard(CardRegistry.LUNALA.clone());
+            player.addCard(CardRegistry.MAGEARNA.clone());
+            player.addCard(CardRegistry.LUNATONE.clone());
+            player.addCard(CardRegistry.SOLROCK.clone());
+            player.addCard(CardRegistry.RATICATE.clone());
+            player.addCard(CardRegistry.ALOLAN_RATICATE.clone());
+            player.addCard(CardRegistry.ALOLAN_RAICHU.clone());
+            player.addCard(CardRegistry.PERSIAN.clone());
+            player.addCard(CardRegistry.ALOLAN_PERSIAN.clone());
+            player.addCard(CardRegistry.SANDSLASH.clone());
+            player.addCard(CardRegistry.ALOLAN_SANDSLASH.clone());
+            player.addCard(CardRegistry.NINETALES.clone());
+            player.addCard(CardRegistry.ALOLAN_NINETALES.clone());
+            player.addCard(CardRegistry.MUK.clone());
+            player.addCard(CardRegistry.ALOLAN_MUK.clone());
+            player.addCard(CardRegistry.DUGTRIO.clone());
+            player.addCard(CardRegistry.ALOLAN_DUGTRIO.clone());
+            player.addCard(CardRegistry.GOLEM.clone());
+            player.addCard(CardRegistry.ALOLAN_GOLEM.clone());
+            player.addCard(CardRegistry.EXEGGCUTE.clone());
+            player.addCard(CardRegistry.EXEGGUTOR.clone());
+            player.addCard(CardRegistry.ALOLAN_EXEGGUTOR.clone());
+            player.addCard(CardRegistry.MAROWAK.clone());
+            player.addCard(CardRegistry.ALOLAN_MAROWAK.clone());
+            player.addCard(CardRegistry.GOGOAT.clone());
+            player.addCard(CardRegistry.AIPOM.clone());
+            player.addCard(CardRegistry.PACHIRISU.clone());
+            player.addCard(CardRegistry.MUNCHLAX.clone());
+            player.addCard(CardRegistry.CHERUBI.clone());
+            player.addCard(CardRegistry.APPLIN.clone());
+            player.addCard(CardRegistry.FLAPPLE.clone());
+            player.addCard(CardRegistry.APPLETUN.clone());
+            player.addCard(CardRegistry.DIPPLIN.clone());
+            player.addCard(CardRegistry.HYDRAPPLE.clone());
+            player.addCard(CardRegistry.SKWOVET.clone());
+            player.addCard(CardRegistry.GREEDENT.clone());
+            player.addCard(CardRegistry.PALDEAN_TAUROS_COMBAT.clone());
+        }
+        if (Objects.equals(mode, "classic")) {
+            Random rand = new Random();
+            int starters1 = rand.nextInt(2);
+            int starters2 = rand.nextInt(3);
+            if (starters2 == 0) {
+                player.addCard(CardRegistry.VENUSAUR.clone());
+                player.addCard(CardRegistry.CHARIZARD.clone());
+                player.addCard(CardRegistry.BLASTOISE.clone());
+            }
+            if (starters2 == 1) {
+                player.addCard(CardRegistry.SCEPTILE.clone());
+                player.addCard(CardRegistry.BLAZIKEN.clone());
+                player.addCard(CardRegistry.SWAMPERT.clone());
+            }
+            if (starters2 == 2) {
+                player.addCard(CardRegistry.DECIDUEYE.clone());
+                player.addCard(CardRegistry.INCINEROAR.clone());
+                player.addCard(CardRegistry.PRIMARINA.clone());
+            }
+            if (starters1 == 0) {
+                player.addCard(CardRegistry.TURTWIG.clone());
+                player.addCard(CardRegistry.CHIMCHAR.clone());
+                player.addCard(CardRegistry.PIPLUP.clone());
+            }
+            if (starters1 == 1) {
+                player.addCard(CardRegistry.ROWLET.clone());
+                player.addCard(CardRegistry.LITTEN.clone());
+                player.addCard(CardRegistry.POPPLIO.clone());
+            }
+            Card[] notFullyEvolved = {CardRegistry.PIKACHU, CardRegistry.EEVEE, CardRegistry.MURKROW, CardRegistry.PORYGON, CardRegistry.RALTS, CardRegistry.APPLIN};
+            Card[] pickup = {CardRegistry.ZIGZAGOON, CardRegistry.AIPOM};
+            player.addCard(notFullyEvolved[rand.nextInt(notFullyEvolved.length)].clone());
+            player.addCard(pickup[rand.nextInt(pickup.length)].clone());
+            List<Card> pokemon = new ArrayList<>();
+            pokemon.add(CardRegistry.GARDEVOIR);
+            pokemon.add(CardRegistry.GALLADE);
+            pokemon.add(CardRegistry.GYARADOS);
+            pokemon.add(CardRegistry.LUCARIO);
+            pokemon.add(CardRegistry.SNORLAX);
+            pokemon.add(CardRegistry.CORVIKNIGHT);
+            pokemon.add(CardRegistry.FLYGON);
+            pokemon.add(CardRegistry.FROSLASS);
+            pokemon.add(CardRegistry.GLIMMORA);
+            pokemon.add(CardRegistry.LUDICOLO);
+            pokemon.add(CardRegistry.MACHAMP);
+            pokemon.add(CardRegistry.RAICHU);
+            pokemon.add(CardRegistry.TALONFLAME);
+            pokemon.add(CardRegistry.TINKATON);
+            pokemon.add(CardRegistry.URSALUNA);
+            pokemon.add(CardRegistry.WOBBUFFET);
+            pokemon.add(CardRegistry.ZOROARK);
+            for (int i = 0; i < 5; i++) {
+                int r = rand.nextInt(pokemon.size());
+                player.addCard(pokemon.get(r).clone());
+                pokemon.remove(r);
+            }
+            player.addCard(CardRegistry.DITTO.clone());
+            player.addCard(CardRegistry.UNOWN.clone());
+            player.addCard(CardRegistry.SPINDA.clone());
+            player.addCard(CardRegistry.MEW.clone());
+            player.addCard(CardRegistry.SLAKING.clone());
+            player.addCard(CardRegistry.MANAPHY.clone());
+            player.addCard(CardRegistry.HAXORUS.clone());
+        }
         player.shuffle();
     }
 
@@ -116,6 +261,7 @@ public class GameScreen extends AppCompatActivity {
         final Handler handler = new Handler(Looper.getMainLooper());
         Animation startAnim = AnimationUtils.loadAnimation(this, R.anim.turn_banner_enter);
         if (turn == 0) {
+            activePlayer = p1;
             updateToast("Choose an attribute to compare", -1);
             findViewById(R.id.turnBannerRed).setVisibility(View.VISIBLE);
             findViewById(R.id.turnBannerRedText).setVisibility(View.VISIBLE);
@@ -125,6 +271,7 @@ public class GameScreen extends AppCompatActivity {
             handler.postDelayed(() -> findViewById(R.id.turnBannerRedText).setVisibility(View.INVISIBLE), 1500);
         }
         if (turn == 1) {
+            activePlayer = p2;
             updateToast(p2.getName() + " is choosing an attribute", -1);
             findViewById(R.id.turnBannerBlue).setVisibility(View.VISIBLE);
             findViewById(R.id.turnBannerBlueText).setVisibility(View.VISIBLE);
@@ -143,6 +290,8 @@ public class GameScreen extends AppCompatActivity {
         updateItemImage(findViewById(R.id.itemCardOpponent), null);
         if (!p1.hasCards()) p1.shuffle();
         if (!p2.hasCards()) p2.shuffle();
+        p1.reset();
+        p2.reset();
         ConstraintLayout currentCard = findViewById(R.id.card);
         Animation cardEnter = AnimationUtils.loadAnimation(this, R.anim.card_enter);
         currentCard.startAnimation(cardEnter);
@@ -150,10 +299,16 @@ public class GameScreen extends AppCompatActivity {
         findViewById(R.id.opponentCard).setVisibility(View.INVISIBLE);
         adjustCard(currentCard, 0, 0, 1.25f, View.INVISIBLE, findViewById(R.id.p1Attribute));
         adjustCard(findViewById(R.id.opponentCard), 0, 0, 1.25f, View.INVISIBLE, findViewById(R.id.p2Attribute));
-        findViewById(R.id.p1Burst).clearAnimation();
-        findViewById(R.id.p2Burst).clearAnimation();
-        findViewById(R.id.p1Burst).setVisibility(View.INVISIBLE);
-        findViewById(R.id.p2Burst).setVisibility(View.INVISIBLE);
+        findViewById(R.id.card).findViewById(R.id.weaknessBurst).clearAnimation();
+        findViewById(R.id.card).findViewById(R.id.weaknessBurst).setVisibility(View.INVISIBLE);
+        findViewById(R.id.card).findViewById(R.id.weaknessBurst).setScaleX(1);
+        findViewById(R.id.card).findViewById(R.id.weaknessBurst).setScaleY(1);
+        findViewById(R.id.opponentCard).findViewById(R.id.weaknessBurst).clearAnimation();
+        findViewById(R.id.opponentCard).findViewById(R.id.weaknessBurst).setVisibility(View.INVISIBLE);
+        findViewById(R.id.opponentCard).findViewById(R.id.weaknessBurst).setScaleX(1);
+        findViewById(R.id.opponentCard).findViewById(R.id.weaknessBurst).setScaleY(1);
+        updateStatArrows(findViewById(R.id.card), p1, View.INVISIBLE);
+        updateStatArrows(findViewById(R.id.opponentCard), p1, View.INVISIBLE);
         updateChoice(findViewById(R.id.card),"");
         updateChoice(findViewById(R.id.opponentCard),"");
         ImageView megaButton = findViewById(R.id.megaEvolutionButton);
@@ -177,6 +332,10 @@ public class GameScreen extends AppCompatActivity {
         findViewById(R.id.buttonSPDEF).setOnClickListener(v -> {if (turn == 0) updateChoice(currentCard, "spdef");});
         findViewById(R.id.buttonSPD).setOnClickListener(v -> {if (turn == 0) updateChoice(currentCard, "spd");});
         ImageView abilityButton = findViewById(R.id.abilityIcon);
+        if (p1.getCounterCharge() > 0) findViewById(R.id.chargeCounter).setVisibility(View.VISIBLE);
+        else findViewById(R.id.chargeCounter).setVisibility(View.INVISIBLE);
+        setStatusEffect(findViewById(R.id.statusEffectPlayer), p1.getStatusCondition());
+        setStatusEffect(findViewById(R.id.statusEffectOpponent), p2.getStatusCondition());
 
         //Sets the functionality for clicking on the ability
         setButtonFunctionAbility(abilityButton, p1.getCurrentCard());
@@ -203,7 +362,7 @@ public class GameScreen extends AppCompatActivity {
             Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
             itemButton.startAnimation(buttonPulse);
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            PopupWindow popupWindow = new PopupWindow(inflater.inflate(R.layout.item_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+            @SuppressLint("InflateParams") PopupWindow popupWindow = new PopupWindow(inflater.inflate(R.layout.item_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
             popupWindow.showAtLocation(this.findViewById(R.id.activityGame), Gravity.CENTER, 0, 0);
             List<ConstraintLayout> views = new ArrayList<>();
             views.add(popupWindow.getContentView().findViewById(R.id.item1));
@@ -235,7 +394,7 @@ public class GameScreen extends AppCompatActivity {
                     });
                     views.get(i).setOnLongClickListener(u -> {
                         LayoutInflater inflater2 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                        PopupWindow popupWindow2 = new PopupWindow(inflater2.inflate(R.layout.card_layout_item, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+                        @SuppressLint("InflateParams") PopupWindow popupWindow2 = new PopupWindow(inflater2.inflate(R.layout.card_layout_item, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
                         popupWindow2.showAtLocation(this.findViewById(R.id.activityGame), Gravity.CENTER, 0, 0);
                         p1.getItem(finalI).displayCard(popupWindow2.getContentView().findViewById(R.id.cardItemRaw));
                         return true;
@@ -264,7 +423,7 @@ public class GameScreen extends AppCompatActivity {
         submitButton.setOnClickListener(v -> {
             Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
             submitButton.startAnimation(buttonPulse);
-            AI ai = new AI(p2.getCurrentCard(), p2.megaEvolve, turn == 1, p1, p2);
+            AI ai = new AI(this, p2.getCurrentCard(), p2.megaEvolve, turn == 1, p1, p2);
             if (turn == 1) {
                 ai.chooseAttack();
                 updateChoice(currentCard, ai.getPreferredStat());
@@ -303,83 +462,132 @@ public class GameScreen extends AppCompatActivity {
                 });
             }
         });
+
+        //Sets the functionality of the field effect button (weather indicator)
+        ImageView fieldIcon = findViewById(R.id.fieldEffect);
+        fieldIcon.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            @SuppressLint("InflateParams") PopupWindow popupWindow = new PopupWindow(inflater.inflate(R.layout.rules_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+            popupWindow.showAtLocation(this.findViewById(R.id.activityGame), Gravity.CENTER, 0, 0);
+            ((TextView)popupWindow.getContentView().findViewById(R.id.ruleName)).setText(FieldEffect.setName(this, fieldEffect));
+            ((TextView)popupWindow.getContentView().findViewById(R.id.ruleDescription)).setText(FieldEffect.setDescription(this, fieldEffect));
+            ((ImageView)popupWindow.getContentView().findViewById(R.id.ruleImage)).setImageResource(FieldEffect.setImage(this, fieldEffect));
+        });
+
+        //Sets the functionality of each status effect indicator
+        ImageView statusIcon1 = findViewById(R.id.statusEffectPlayer);
+        statusIcon1.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            @SuppressLint("InflateParams") PopupWindow popupWindow = new PopupWindow(inflater.inflate(R.layout.rules_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+            popupWindow.showAtLocation(this.findViewById(R.id.activityGame), Gravity.CENTER, 0, 0);
+            ((TextView)popupWindow.getContentView().findViewById(R.id.ruleName)).setText(StatusCondition.setName(this, p1.getStatusCondition()));
+            ((TextView)popupWindow.getContentView().findViewById(R.id.ruleDescription)).setText(StatusCondition.setDescription(this, p1.getStatusCondition()));
+            ((ImageView)popupWindow.getContentView().findViewById(R.id.ruleImage)).setImageResource(StatusCondition.getImage(this, p1.getStatusCondition()));
+        });
+
+        ImageView statusIcon2 = findViewById(R.id.statusEffectOpponent);
+        statusIcon2.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            @SuppressLint("InflateParams") PopupWindow popupWindow = new PopupWindow(inflater.inflate(R.layout.rules_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+            popupWindow.showAtLocation(this.findViewById(R.id.activityGame), Gravity.CENTER, 0, 0);
+            ((TextView)popupWindow.getContentView().findViewById(R.id.ruleName)).setText(StatusCondition.setName(this, p2.getStatusCondition()));
+            ((TextView)popupWindow.getContentView().findViewById(R.id.ruleDescription)).setText(StatusCondition.setDescription(this, p2.getStatusCondition()));
+            ((ImageView)popupWindow.getContentView().findViewById(R.id.ruleImage)).setImageResource(StatusCondition.getImage(this, p2.getStatusCondition()));
+        });
     }
 
     //Compares the two cards and determines the winner
     public void compare(Player p1, Player p2, String s, AI ai) {
         chosenAttribute = s;
+        goalLarge = true;
         final Handler handler = new Handler(Looper.getMainLooper());
-        Button submitButton = findViewById(R.id.submitButton);
-        ImageView megaButton = findViewById(R.id.megaEvolutionButton);
-        Button itemButton = findViewById(R.id.itemButton);
-        submitButton.setEnabled(false);
-        megaButton.setEnabled(false);
-        itemButton.setEnabled(false);
-        cardP1 = p1.playCard();
-        cardP2 = p2.playCard();
-        Item itemP1 = null;
-        Item itemP2 = null;
-        if (ai.getPreferredItem() != null) itemP2 = p2.useItem(ai.getPreferredItem());
-        if (itemP2 != null) {
+        findViewById(R.id.submitButton).setEnabled(false);
+        findViewById(R.id.megaEvolutionButton).setEnabled(false);
+        findViewById(R.id.itemButton).setEnabled(false);
+        p1.setPlayedItem(null);
+        p2.setPlayedItem(null);
+        p1.playCard();
+        p2.playCard();
+        if (ai.getPreferredItem() != null) {
+            p2.setPlayedItem(p2.useItem(ai.getPreferredItem()));
+        }
+        if (p2.getPlayedItem() != null) {
             updateItemImage(findViewById(R.id.itemCardOpponent),ai.getPreferredItem());
         }
-        if (selectedItem > -1) itemP1 = p1.useItem(selectedItem);
+        if (selectedItem > -1) {
+            p1.setPlayedItem(p1.useItem(selectedItem));
+        }
         if (megaEvolution) {
             megaEvolved = true;
             p1.megaEvolve = false;
-            cardP1 = cardP1.megaEvolve();
+            p1.setPlayedCard(p1.getPlayedCard().megaEvolve());
         }
         if (ai.getPreferredME()) {
-            cardP2 = cardP2.megaEvolve();
             p2.megaEvolve = false;
-            cardP2.displayCard(this, findViewById(R.id.opponentCard));
+            p2.setPlayedCard(p2.getPlayedCard().megaEvolve());
+            p2.getPlayedCard().displayCard(this, findViewById(R.id.opponentCard));
+        }
+
+        //Charge effects
+        Effect chargeEffect = new Effect((game, player, opponent) -> player.setLevel("spatk", player.getLevel("spatk") + 1), 0, "charge");
+        if (p1.getCounterCharge() > 0 && p1.getPlayedCard().getType() == Type.ELECTRIC) {
+            p1.getPlayedCard().setCharged(true);
+            p1.setCounterCharge(p1.getCounterCharge() - 1);
+            effectQueue.add(new EffectAction(chargeEffect, p1, null, p1.getPlayedCard().getAttribute("spd")));
+        }
+        if (p2.getCounterCharge() > 0 && p2.getPlayedCard().getType() == Type.ELECTRIC) {
+            p2.getPlayedCard().setCharged(true);
+            p2.setCounterCharge(p2.getCounterCharge() - 1);
+            effectQueue.add(new EffectAction(chargeEffect, p2, null, p2.getPlayedCard().getAttribute("spd")));
         }
 
         //Applies ability and item modifiers
-        //Priority 0 is for mold breaker
-        boolean abilities = applyPassiveEffect(itemP1, 0, cardP1, cardP2, p1, p2, itemP1, itemP2, chosenAttribute);
-        if (!applyPassiveEffect(itemP2, 0, cardP2, cardP1, p2, p1, itemP1, itemP2, chosenAttribute)) abilities = false;
-        if (!applyPassiveEffect(cardP1.getAbility(), 0, cardP1, cardP2, p1, p2, itemP1, itemP2, chosenAttribute)) abilities = false;
-        if (!applyPassiveEffect(cardP2.getAbility(), 0, cardP2, cardP1, p2, p1, itemP1, itemP2, chosenAttribute)) abilities = false;
-        //Priority 1 is for things that change the state of the hand
-        applyPassiveEffect(itemP1, 1, cardP1, cardP2, p1, p2, itemP1, itemP2, chosenAttribute);
-        applyPassiveEffect(itemP2, 1, cardP2, cardP1, p2, p1, itemP1, itemP2, chosenAttribute);
-        if (abilities) {
-            applyPassiveEffect(cardP1.getAbility(), 1, cardP1, cardP2, p1, p2, itemP1, itemP2, chosenAttribute);
-            applyPassiveEffect(cardP2.getAbility(), 1, cardP2, cardP1, p2, p1, itemP1, itemP2, chosenAttribute);
+        if (p1.getPlayedItem() != null) {
+            for (Effect e : p1.getPlayedItem().getEffects()) {
+                effectQueue.add(new EffectAction(e, p1, p2, p1.getPlayedCard().getAttribute("spd")));
+            }
         }
-        //Priority 2 is for card swaps
-        applyPassiveEffect(itemP1, 2, cardP1, cardP2, p1, p2, itemP1, itemP2, chosenAttribute);
-        applyPassiveEffect(itemP2, 2, cardP2, cardP1, p2, p1, itemP1, itemP2, chosenAttribute);
-        if (abilities) {
-            PassiveAbility temp1 = cardP1.getAbility();
-            PassiveAbility temp2 = cardP2.getAbility();
-            applyPassiveEffect(temp1, 2, cardP1, cardP2, p1, p2, itemP1, itemP2, chosenAttribute);
-            applyPassiveEffect(temp2, 2, cardP2, cardP1, p2, p1, itemP1, itemP2, chosenAttribute);
+        if (p2.getPlayedItem() != null) {
+            for (Effect e : p2.getPlayedItem().getEffects()) {
+                effectQueue.add(new EffectAction(e, p2, p1, p2.getPlayedCard().getAttribute("spd")));
+            }
         }
+        if (p1.getPlayedCard().getAbility() != null) {
+            for (Effect e : p1.getPlayedCard().getAbility().getEffects()) {
+                effectQueue.add(new EffectAction(e, p1, p2, p1.getPlayedCard().getAttribute("spd")));
+            }
+        }
+        if (p2.getPlayedCard().getAbility() != null) {
+            for (Effect e : p2.getPlayedCard().getAbility().getEffects()) {
+                effectQueue.add(new EffectAction(e, p2, p1, p2.getPlayedCard().getAttribute("spd")));
+            }
+        }
+        if (getFieldEffect() != FieldEffect.NONE) {
+            for (Effect e : FieldEffect.getEffects(getFieldEffect())) {
+                effectQueue.add(new EffectAction(e, p1, null, 0));
+                effectQueue.add(new EffectAction(e, p2, null, 0));
+            }
+        }
+        applyPassiveEffect();
 
         updateChoice(findViewById(R.id.card),chosenAttribute);
         updateChoice(findViewById(R.id.opponentCard),chosenAttribute);
-        p1.setCurrentStat(cardP1.getAttribute(chosenAttribute));
-        p2.setCurrentStat(cardP2.getAttribute(chosenAttribute));
-        p1.setCurrentMod(40);
-        p2.setCurrentMod(40);
-
-        //Applies ability and item modifiers
-        //Priority 3 is for card modifiers
-        applyPassiveEffect(itemP1, 3, cardP1, cardP2, p1, p2, itemP1, itemP2, chosenAttribute);
-        applyPassiveEffect(itemP2, 3, cardP2, cardP1, p2, p1, itemP1, itemP2, chosenAttribute);
-        if (abilities) {
-            applyPassiveEffect(cardP1.getAbility(), 3, cardP1, cardP2, p1, p2, itemP1, itemP2, chosenAttribute);
-            applyPassiveEffect(cardP2.getAbility(), 3, cardP2, cardP1, p2, p1, itemP1, itemP2, chosenAttribute);
-        }
+        p1.setCurrentStat(p1.getPlayedCard().getAttribute(chosenAttribute));
+        p2.setCurrentStat(p2.getPlayedCard().getAttribute(chosenAttribute));
 
         //Applies modifiers due to weaknesses
-        p1.setCurrentStat(p1.getCurrentStat() + setWeakness(cardP1, cardP2, findViewById(R.id.p2Burst), p1.getCurrentMod()));
-        p2.setCurrentStat(p2.getCurrentStat() + setWeakness(cardP2, cardP1, findViewById(R.id.p1Burst), p2.getCurrentMod()));
-
         ConstraintLayout card1 = findViewById(R.id.card);
         ConstraintLayout card2 = findViewById(R.id.opponentCard);
+
+        p1.getPlayedCard().displayCard(this, card1);
+        p2.getPlayedCard().displayCard(this, card2);
+
+        p1.setCurrentStat((int)(p1.getCurrentStat() * applyLevel(p1.getLevel(s)) * setWeakness(p1.getPlayedCard(), p2.getPlayedCard(), card2.findViewById(R.id.weaknessBurst), p1.getSupereffectiveMultiplier(), p1.getSupereffectiveHit()) * setCritical(p1.getCritRate(), p1.getCritMultiplier())));
+        p2.setCurrentStat((int)(p2.getCurrentStat() * applyLevel(p2.getLevel(s)) * setWeakness(p2.getPlayedCard(), p1.getPlayedCard(), card1.findViewById(R.id.weaknessBurst), p2.getSupereffectiveMultiplier(), p1.getSupereffectiveHit()) * setCritical(p2.getCritRate(), p2.getCritMultiplier())));
+
+        updateStatArrows(card1, p1, View.VISIBLE);
+        updateStatArrows(card2, p2, View.VISIBLE);
+
         card2.setVisibility(View.VISIBLE);
         findViewById(R.id.burst).setVisibility(View.VISIBLE);
         handler.postDelayed(() -> adjustCard(card1, 175f, 250f, 0.6f, View.VISIBLE, findViewById(R.id.p1Attribute)), 1);
@@ -390,32 +598,31 @@ public class GameScreen extends AppCompatActivity {
         //Determines the higher stat and performs the appropriate action
         if (p1.getCurrentStat() > highestStat || p2.getCurrentStat() > highestStat) {
             highestStat = Math.max(p1.getCurrentStat(),p2.getCurrentStat());
-            highestStatName = chosenAttribute;
         }
-        if (p1.getCurrentStat() > p2.getCurrentStat()) {
+        if (checkGoal(p1.getCurrentStat(),p2.getCurrentStat()) == -1) {
             p1.addPoint(prizePot);
             p2.addItem(generateItem());
             handler.postDelayed(() -> setPrizePot(1), 3000);
-            setPriority(p1, p2, cardP1, cardP2, "p1", abilities);
+            setPriority(p1, p2, "p1");
             updateToast(p1.getName() + " wins the point", -1);
             Animation animCard = AnimationUtils.loadAnimation(this, R.anim.card_exit_player);
             handler.postDelayed(() -> card1.startAnimation(animCard), 2800);
             handler.postDelayed(() -> card2.startAnimation(animCard), 2800);
         }
-        if (p2.getCurrentStat() > p1.getCurrentStat()) {
+        else if (checkGoal(p1.getCurrentStat(),p2.getCurrentStat()) == 1) {
             p2.addPoint(prizePot);
             p1.addItem(generateItem());
             newItem = true;
             handler.postDelayed(() -> setPrizePot(1), 3000);
-            setPriority(p1, p2, cardP1, cardP2, "p2", abilities);
+            setPriority(p1, p2, "p2");
             updateToast(p2.getName() + " wins the point", -1);
             Animation animCard = AnimationUtils.loadAnimation(this, R.anim.card_exit_opponent);
             handler.postDelayed(() -> card1.startAnimation(animCard), 2800);
             handler.postDelayed(() -> card2.startAnimation(animCard), 2800);
         }
-        if (p1.getCurrentStat() == p2.getCurrentStat()) {
+        else if (checkGoal(p1.getCurrentStat(),p2.getCurrentStat()) == 0) {
             handler.postDelayed(() -> setPrizePot(prizePot + 1), 3000);
-            setPriority(p1, p2, cardP1, cardP2, "tie", abilities);
+            setPriority(p1, p2, "tie");
             updateToast("It's a tie", -1);
         }
         findViewById(R.id.score1).getLayoutParams().width = (int)Math.max(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()) * (6 - p2.getPoints()),1);
@@ -433,10 +640,27 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
+    private int checkGoal(int i1, int i2) {
+        if (goalLarge) {
+            return Integer.compare(i2, i1);
+        }
+        else {
+            return Integer.compare(i1, i2);
+        }
+    }
+
+    public void setGoalReverse(boolean b) {
+        goalLarge = b;
+    }
+
+    public String getChosenAttribute() {
+        return chosenAttribute;
+    }
+
     public void setButtonFunctionAbility(ImageView abilityButton, Card c1) {
         abilityButton.setOnClickListener(v -> {
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            PopupWindow popupWindow = new PopupWindow(inflater.inflate(R.layout.ability_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+            @SuppressLint("InflateParams") PopupWindow popupWindow = new PopupWindow(inflater.inflate(R.layout.ability_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
             popupWindow.showAtLocation(this.findViewById(R.id.activityGame), Gravity.CENTER, 0, 0);
             ((TextView) popupWindow.getContentView().findViewById(R.id.abilityName)).setText(String.valueOf(c1.getAbility().getName()));
             ((TextView) popupWindow.getContentView().findViewById(R.id.abilityDescription)).setText(String.valueOf(c1.getAbility().getDescription()));
@@ -500,7 +724,7 @@ public class GameScreen extends AppCompatActivity {
         toast.setText("");
     }
 
-    public void setPriority(Player p1, Player p2, Card card1, Card card2, String s, boolean abilities) {
+    public void setPriority(Player p1, Player p2, String s) {
         if (p1.getSpeed() > p2.getSpeed()) turn = 0;
         if (p2.getSpeed() > p1.getSpeed()) turn = 1;
         if (p1.getSpeed() == p2.getSpeed()) {
@@ -545,18 +769,23 @@ public class GameScreen extends AppCompatActivity {
     }
 
     //Alters the power of attacks due to weaknesses, and displays this on screen
-    private int setWeakness(Card attacker, Card defender, ImageView burst, int mod) {
-        if (attacker.checkType(defender)) {
+    private double setWeakness(Card attacker, Card defender, ImageView burst, double mod, boolean isTrue) {
+        if (attacker.checkType(defender) || isTrue) {
             burst.setVisibility(View.VISIBLE);
             Animation burstPulse = AnimationUtils.loadAnimation(this, R.anim.burst_pulse);
             burst.startAnimation(burstPulse);
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(() -> {
+                burst.setScaleX(4);
+                burst.setScaleY(4);
+            }, 500);
             return mod;
         }
-        return 0;
+        return 1d;
     }
 
     //Adjusts the size of the prize pot, and displays this on screen
-    private void setPrizePot(int p) {
+    public void setPrizePot(int p) {
         prizePot = p;
         if (prizePot == 1) {
             findViewById(R.id.prizePot).setVisibility(View.INVISIBLE);
@@ -569,101 +798,196 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
-    private boolean applyPassiveEffect(PassiveAbility passive, int priority, Card c1, Card c2, Player p1, Player p2, Item i1, Item i2, String s) {
-        if (passive != null) {
-            for (Effect effect : passive.getEffects()) {
-                if (effect.checkConditions(p1, p2, c1, c2, s) && priority == 0) {
-                    if (effect.checkEffect("null-ability")) return false;
-                    if (effect.checkEffect("copy-ability")) {
-                        if (c1 == cardP1) {
-                            cardP1.setAbility(c2.getAbility());
-                            cardP1.displayCard(this, findViewById(R.id.card));
-                        }
-                        if (c1 == cardP2) {
-                            cardP2.setAbility(c2.getAbility());
-                            cardP2.displayCard(this, findViewById(R.id.opponentCard));
-                        }
-
-                    }
-                    if (effect.checkEffect("replay-card")) {
-                        p1.addCard(c1, 0);
-                    }
-                }
-                if (effect.checkConditions(p1, p2, c1, c2, s) && priority == 1) {
-                    if (effect.checkEffect("randomize-attribute"))
-                        chosenAttribute = randomizeAttribute();
-                    ;
-                    if (effect.checkEffect("copy-card")) {
-                        if (c1 == cardP1) {
-                            cardP1 = cardP2;
-                            cardP1.displayCard(this, findViewById(R.id.card));
-                        }
-                        if (c1 == cardP2) {
-                            cardP2 = cardP1;
-                            cardP2.displayCard(this, findViewById(R.id.opponentCard));
-                        }
-                    }
-                    if (effect.checkEffect("replace-card")) {
-                        c1 = p1.playCard();
-                        cardP1.displayCard(this, findViewById(R.id.card));
-                        cardP2.displayCard(this, findViewById(R.id.opponentCard));
-                    }
-                }
-                if (effect.checkConditions(p1, p2, c1, c2, s) && priority == 2) {
-                    if (effect.checkEffect("swap-card")) {
-                        Card temp = cardP1;
-                        cardP1 = cardP2;
-                        cardP2 = temp;
-                        cardP1.displayCard(this, findViewById(R.id.card));
-                        cardP2.displayCard(this, findViewById(R.id.opponentCard));
-                    }
-                }
-                if (effect.checkConditions(p1, p2, c1, c2, s) && priority == 3) {
-                    if (effect.checkEffect("modify-stat")) p1.setCurrentStat(effect.apply(p1.getCurrentStat()));
-                    if (effect.checkEffect("modify-weakness")) p1.setCurrentMod(effect.apply(p1.getCurrentMod()));
-                    if (effect.checkEffect("modify-prize")) setPrizePot(effect.apply(prizePot));
-                    if (effect.checkEffect("get-item")) {
-                        if (effect.getItem() == null) p1.addItem(generateItem());
-                        else p1.addItem(effect.getItem());
-                        if (c1 == cardP1) {
-                            newItem = true;
-                        }
-                    }
-                    if (effect.checkEffect("return-item")) {
-                        p1.addItem(i1);
-                        if (c1 == cardP1) {
-                            newItem = true;
-                        }
-                    }
-                    if (effect.checkEffect("modify-speed")) p1.setSpeed(effect.apply(p1.getSpeed()));
-                }
-            }
-        }
-        return true;
+    public int getPrizePot() {
+        return prizePot;
     }
 
-    private String randomizeAttribute() {
+    private void applyPassiveEffect() {
+        while (!effectQueue.isEmpty()) {
+            EffectAction e = effectQueue.poll();
+            e.applyEffect(this);
+        }
+    }
+
+    public void effectQueueAdd(EffectAction e) {
+        effectQueue.add(e);
+    }
+
+    public void removeEffectFromQueue(String s) {
+        effectQueue.removeIf(e -> Objects.equals(e.getEffect().getType(), s));
+    }
+
+    public void removeEffectFromQueue(String s, Player p) {
+        effectQueue.removeIf(e -> Objects.equals(e.getEffect().getType(), s) && e.getPlayer() == p);
+    }
+
+    private void updateStatArrows(ConstraintLayout card, Player player, int visible) {
+        if (player.getLevel("hp") > 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange1_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange1_1)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("hp") > 1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange1_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange1_2)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("hp") > 2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange1_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange1_3)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("hp") < 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange1_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange1_1)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("hp") < -1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange1_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange1_2)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("hp") < -2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange1_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange1_3)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("atk") > 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange2_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange2_1)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("atk") > 1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange2_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange2_2)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("atk") > 2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange2_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange2_3)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("atk") < 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange2_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange2_1)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("atk") < -1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange2_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange2_2)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("atk") < -2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange2_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange2_3)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("def") > 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange3_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange3_1)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("def") > 1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange3_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange3_2)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("def") > 2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange3_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange3_3)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("def") < 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange3_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange3_1)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("def") < -1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange3_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange3_2)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("def") < -2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange3_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange3_3)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spatk") > 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange4_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange4_1)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spatk") > 1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange4_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange4_2)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spatk") > 2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange4_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange4_3)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spatk") < 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange4_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange4_1)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spatk") < -1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange4_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange4_2)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spatk") < -2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange4_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange4_3)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spdef") > 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange5_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange5_1)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spdef") > 1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange5_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange5_2)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spdef") > 2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange5_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange5_3)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spdef") < 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange5_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange5_1)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spdef") < -1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange5_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange5_2)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spdef") < -2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange5_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange5_3)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spd") > 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange6_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange6_1)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spd") > 1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange6_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange6_2)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spd") > 2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange6_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange6_3)).setImageResource(R.drawable.stat_raise);}
+        if (player.getLevel("spd") < 0 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange6_1).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange6_1)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spd") < -1 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange6_2).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange6_2)).setImageResource(R.drawable.stat_lower);}
+        if (player.getLevel("spd") < -2 || visible == View.INVISIBLE) {card.findViewById(R.id.statChange6_3).setVisibility(visible); ((ImageView)card.findViewById(R.id.statChange6_3)).setImageResource(R.drawable.stat_lower);}
+    }
+
+    private double applyLevel(int i) {
+        switch (i) {
+            case -3:
+                return 0.4d;
+            case -2:
+                return 0.5d;
+            case -1:
+                return 0.667d;
+            case 1:
+                return 1.5d;
+            case 2:
+                return 2d;
+            case 3:
+                return 2.5d;
+            default:
+                return 1d;
+        }
+    }
+
+    private double setCritical(int i, double d) {
+        Random rand = new Random();
+        if (i == 1) {
+            if (rand.nextInt(100) < 15) return d;
+            else return 1d;
+        }
+        if (i == 2) {
+            if (rand.nextInt(100) < 25) return d;
+            else return 1d;
+        }
+        if (i == 3) {
+            if (rand.nextInt(100) < 50) return d;
+            else return 1d;
+        }
+        if (i == 4) return d;
+        return 1d;
+    }
+
+    public void randomizeAttribute() {
         Random rand = new Random();
         switch (rand.nextInt(6)) {
             case 0:
-                return "hp";
+                chosenAttribute = "hp";
+                break;
             case 1:
-                return "atk";
+                chosenAttribute = "atk";
+                break;
             case 2:
-                return "def";
+                chosenAttribute = "def";
+                break;
             case 3:
-                return "spatk";
+                chosenAttribute = "spatk";
+                break;
             case 4:
-                return "spdef";
+                chosenAttribute = "spdef";
+                break;
             case 5:
-                return "spd";
-            default:
-                return "";
+                chosenAttribute = "spd";
+                break;
         }
     }
-    private Item generateItem() {
+
+    public FieldEffect getFieldEffect() {
+        return fieldEffect;
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void setFieldEffect(FieldEffect e) {
+        fieldEffect = e;
+        ImageView field = findViewById(R.id.fieldEffect);
+        ConstraintLayout background = findViewById(R.id.activityGame);
+        field.setVisibility(View.VISIBLE);
+        switch (e) {
+            case RAIN:
+                field.setImageResource(R.drawable.weather_rain);
+                background.setBackground(getDrawable(R.drawable.background_gradient_rain));
+                break;
+            case SUN:
+                field.setImageResource(R.drawable.weather_sun);
+                background.setBackground(getDrawable(R.drawable.background_gradient_sun));
+                break;
+            case SNOW:
+                field.setImageResource(R.drawable.weather_snow);
+                background.setBackground(getDrawable(R.drawable.background_gradient_snow));
+                break;
+            case SANDSTORM:
+                field.setImageResource(R.drawable.weather_sandstorm);
+                background.setBackground(getDrawable(R.drawable.background_gradient_sandstorm));
+                break;
+            case MISTY_TERRAIN:
+                field.setImageResource(R.drawable.terrain_misty);
+                background.setBackground(getDrawable(R.drawable.background_gradient_misty));
+                break;
+            case GRASSY_TERRAIN:
+                field.setImageResource(R.drawable.terrain_grass);
+                background.setBackground(getDrawable(R.drawable.background_gradient_grass));
+                break;
+            case PSYCHIC_TERRAIN:
+                field.setImageResource(R.drawable.terrain_psychic);
+                background.setBackground(getDrawable(R.drawable.background_gradient_psychic));
+                break;
+            case ELECTRIC_TERRAIN:
+                field.setImageResource(R.drawable.terrain_electric);
+                background.setBackground(getDrawable(R.drawable.background_gradient_electric));
+                break;
+            default:
+                field.setVisibility(View.INVISIBLE);
+                background.setBackground(getDrawable(R.drawable.background_gradient));
+                break;
+        }
+    }
+
+    public void setStatusEffect(ImageView effectIcon, StatusCondition s) {
+        if (s == StatusCondition.NONE) {
+            effectIcon.setVisibility(View.INVISIBLE);
+        }
+        else {
+            effectIcon.setVisibility(View.VISIBLE);
+            effectIcon.setImageResource(StatusCondition.getImage(this, s));
+        }
+    }
+
+    public Item generateItem() {
         Random rand = new Random();
-        switch (rand.nextInt(15)) {
+        switch (rand.nextInt(16)) {
             case 0:
                 return Item.X_HEALTH;
             case 1:
@@ -694,8 +1018,31 @@ public class GameScreen extends AppCompatActivity {
                 return Item.GRIP_CLAW;
             case 14:
                 return Item.SCOPE_LENS;
+            case 15:
+                return Item.MIRROR_HERB;
             default:
                 return null;
         }
+    }
+
+    public Item generateBerry() {
+        List<Item> berries = new ArrayList<>();
+        berries.add(Item.SITRUS_BERRY);
+        berries.add(Item.LIECHI_BERRY);
+        berries.add(Item.GANLON_BERRY);
+        berries.add(Item.SALAC_BERRY);
+        berries.add(Item.PETAYA_BERRY);
+        berries.add(Item.APICOT_BERRY);
+        berries.add(Item.STARF_BERRY);
+        berries.add(Item.LANSAT_BERRY);
+        berries.add(Item.ENIGMA_BERRY);
+        Random rand = new Random();
+        return berries.get(rand.nextInt(berries.size()));
+    }
+
+    public String generateTrainerName() {
+        String[] names = {"Joey", "Ethan", "Brendan", "May", "Dawn", "Lucas", "Barry", "Cheren", "Bianca", "Hugh", "Hilbert", "Hilda", "Nate", "Rosa", "Calem", "Serena", "Tierno", "Trevor", "Shauna", "Hau", "Elio", "Selene", "Victor", "Gloria", "Hop", "Florian", "Juliana", "Nemona", "Arven", "Penny", "Carmine", "Kieran"};
+        Random rand = new Random();
+        return names[rand.nextInt(names.length)];
     }
 }

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.HashMap;
@@ -13,15 +14,16 @@ import java.util.Objects;
 
 public class Card {
     private final String name;
-    private final Type type;
+    private Type type;
     private final Map<String, Integer> attributes = new HashMap<>();
-    private final Type weakness;
+    private Type weakness;
     private Ability ability;
     public boolean canEvolve = false;
     private final boolean canMegaEvolve;
     private final int image;
     private Card megaCard;
     private final String flavorText;
+    private boolean charged = false;
 
     public Card(String n, int i, Type t, Ability a, int hp, int atk, int def, int spatk, int spdef, int spd, Type w, String ft) {
         name = n;
@@ -78,8 +80,16 @@ public class Card {
         return type;
     }
 
+    public void setType(Type t) {
+        type = t;
+    }
+
     public Type getWeakness() {
         return weakness;
+    }
+
+    public void setWeakness(Type t) {
+        weakness = t;
     }
 
     public int getImage() {
@@ -88,6 +98,10 @@ public class Card {
 
     public boolean canMegaEvolve() {
         return canMegaEvolve;
+    }
+
+    public boolean canEvolve() {
+        return canEvolve;
     }
 
     public String getFlavorText() {
@@ -102,6 +116,16 @@ public class Card {
         ability = a;
     }
 
+    @NonNull
+    public Card clone() {
+        if (!canMegaEvolve()) {
+            return new Card(name, image, type, ability, attributes.get("hp"), attributes.get("atk"), attributes.get("def"), attributes.get("spatk"), attributes.get("spdef"), attributes.get("spd"), weakness, flavorText).setEvolve(canEvolve);
+        }
+        else {
+            return new Card(name, image, type, ability, attributes.get("hp"), attributes.get("atk"), attributes.get("def"), attributes.get("spatk"), attributes.get("spdef"), attributes.get("spd"), weakness, flavorText, megaCard).setEvolve(canEvolve);
+        }
+    }
+
     public double getStatAverage() {
         int count = 0;
         count += attributes.get("hp");
@@ -114,8 +138,15 @@ public class Card {
     }
 
     public boolean checkType(Card card) {
-        if (type == card.getWeakness()) return true;
-        return ability == Ability.HIDDEN_POWER;
+        return type == card.getWeakness();
+    }
+
+    public boolean getCharged() {
+        return charged;
+    }
+
+    public void setCharged(boolean b) {
+        charged = b;
     }
 
     public void displayCard(Context ctx, ConstraintLayout cardLayout) {

@@ -1,7 +1,9 @@
 package zephyrseb.pokemontoptrumps;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Player {
@@ -12,12 +14,22 @@ public class Player {
     private int score;
     public Boolean megaEvolve = true;
     private int currentStat = 0;
-    private int currentMod = 40;
+    private Map<String, Integer> levels = new HashMap<>();
     private int speed = 0;
+    private int critRate = 0;
+    private double critMultiplier = 2d;
+    private boolean supereffectiveHit = false;
+    private double supereffectiveMultiplier = 1.5d;
+    private Card currentCard;
+    private Item currentItem;
+    private int counterCharge = 0;
+    private String danceStat = "";
+    private StatusCondition status = null;
 
     public Player(String n) {
         name = n;
         score = 0;
+        resetLevels();
     }
 
     public void addCard(Card c) {
@@ -47,7 +59,10 @@ public class Player {
     public boolean hasItem(Item i) {
         boolean success = false;
         for (Item item : itemDeck) {
-            if (item == i) success = true;
+            if (item == i) {
+                success = true;
+                break;
+            }
         }
         return success;
     }
@@ -64,22 +79,51 @@ public class Player {
         return itemDeck.get(i);
     }
 
+    public Item getPlayedItem() {
+        return currentItem;
+    }
+
+    public void setPlayedItem(Item i) {
+        currentItem = i;
+    }
+
     public Card playCard() {
         if (!deck.isEmpty()) {
             Card card = deck.get(0);
             deck.remove(0);
             discard.add(card);
+            currentCard = card;
             return card;
         }
         else return null;
+    }
+
+    public Card getPlayedCard() {
+        return currentCard;
+    }
+
+    public void setPlayedCard(Card card) {
+        currentCard = card;
     }
 
     public Card getCurrentCard() {
         return deck.get(0);
     }
 
+    public void replaceCurrentCard(Card c) {
+        deck.set(0, c);
+    }
+
     public Boolean hasCards() {
         return !deck.isEmpty();
+    }
+
+    public int deckCount() {
+        return deck.size();
+    }
+
+    public List<Card> getDeck() {
+        return deck;
     }
 
     public void shuffle() {
@@ -112,16 +156,8 @@ public class Player {
         return currentStat;
     }
 
-    public int getCurrentMod() {
-        return currentMod;
-    }
-
     public void setCurrentStat(int i) {
         currentStat = i;
-    }
-
-    public void setCurrentMod(int i) {
-        currentMod = i;
     }
 
     public int getSpeed() {
@@ -130,5 +166,87 @@ public class Player {
 
     public void setSpeed(int i) {
         speed = i;
+    }
+
+    public void setLevel(String s, int i) {
+        levels.put(s,i);
+    }
+
+    public int getLevel(String s) {
+        return levels.get(s);
+    }
+
+    public void resetLevels() {
+        levels.put("hp",0);
+        levels.put("atk",0);
+        levels.put("def",0);
+        levels.put("spatk",0);
+        levels.put("spdef",0);
+        levels.put("spd",0);
+    }
+
+    public int getCritRate() {
+        return critRate;
+    }
+
+    public void setCritRate(int i) {
+        critRate = i;
+    }
+
+    public double getCritMultiplier() {
+        return critMultiplier;
+    }
+
+    public void setCritMultiplier(double d) {
+        critMultiplier = d;
+    }
+
+    public boolean getSupereffectiveHit() {
+        return supereffectiveHit;
+    }
+
+    public void setSupereffectiveHit(boolean b) {
+        supereffectiveHit = b;
+    }
+
+    public double getSupereffectiveMultiplier() {
+        return supereffectiveMultiplier;
+    }
+
+    public void setSupereffectiveMultiplier(double d) {
+        supereffectiveMultiplier = d;
+    }
+
+    public int getCounterCharge() {
+        return counterCharge;
+    }
+
+    public void setCounterCharge(int i) {
+        counterCharge = i;
+    }
+
+    public String getDanceStat() {
+        return danceStat;
+    }
+
+    public void setDanceStat(String s) {
+        danceStat = s;
+    }
+
+    public StatusCondition getStatusCondition() {
+        return status;
+    }
+
+    public void setStatusCondition(StatusCondition s) {
+        status = s;
+    }
+
+    public void reset() {
+        critMultiplier = 1.5d;
+        critRate = 0;
+        supereffectiveMultiplier = 2d;
+        supereffectiveHit = false;
+        resetLevels();
+        setSpeed(0);
     }
 }

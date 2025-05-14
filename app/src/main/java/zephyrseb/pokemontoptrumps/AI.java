@@ -9,8 +9,10 @@ public class AI {
     private int preferredStat = -1;
     private Player player;
     private Player opponent;
+    private GameScreen game;
     private final String[] attributes = {"hp", "atk", "def", "spatk", "spdef", "spd"};
-    public AI(Card c, boolean e, boolean p, Player p1, Player p2) {
+    public AI(GameScreen g, Card c, boolean e, boolean p, Player p1, Player p2) {
+        game = g;
         card = c;
         canMegaEvolve = e;
         hasPriority = p;
@@ -19,7 +21,6 @@ public class AI {
     }
 
     public void chooseAttack() {
-        Card genericCard = new Card("", R.drawable.pokemon_mew, Type.PSYCHIC, null, 100, 100, 100, 100, 100, 100, Type.DARK, "");
         int[] bestValue = {0, 0, 0, 0, 0, 0};
         boolean[] bestME = {false, false, false, false, false, false};
         int[] bestItem = {-1, -1, -1, -1, -1, -1};
@@ -30,41 +31,6 @@ public class AI {
                     bestValue[i] = card.megaEvolve().getAttribute(attributes[i]);
                     bestME[i] = true;
                 }
-            }
-            if (card.getAbility() != null) {
-                for (Effect effect : card.getAbility().getEffects()) {
-                    if (effect.checkConditions(player, opponent, card, genericCard, attributes[i]) && effect.checkEffect("modify-stat")) {
-                        bestValue[i] = effect.apply(bestValue[i]);
-                    }
-                }
-            }
-            if (player.noItems() > 0) {
-                int bestMatch = 0;
-                for (int j = 0; j < player.noItems(); j++) {
-                    for (Effect effect : player.getItem(j).getEffects()) {
-                        int mod = 0;
-                        if (effect.checkConditions(player, opponent, card, null, attributes[i]) && effect.checkEffect("modify-stat")) {
-                            mod = effect.apply(bestValue[i]);
-                        }
-                        if (effect.checkConditions(player, opponent, card, null, attributes[i]) && effect.checkEffect("modify-prize")) {
-                            mod = bestValue[i] * 2;
-                        }
-                        if (effect.checkConditions(player, opponent, card, null, attributes[i]) && effect.checkEffect("null-ability") && card.getAbility() == Ability.TRUANT) {
-                            mod = bestValue[i] * 2;
-                        }
-                        if (effect.checkConditions(player, opponent, card, null, attributes[i]) && effect.checkEffect("modify-weakness") && card.getAbility() == Ability.HIDDEN_POWER) {
-                            mod = bestValue[i] + 80;
-                        }
-                        if (effect.checkConditions(player, opponent, card, null, attributes[i]) && effect.checkEffect("replay-card")) {
-                            mod = bestValue[i];
-                        }
-                        if (mod > bestMatch) {
-                            bestMatch = mod;
-                            bestItem[i] = j;
-                        }
-                    }
-                }
-                if (bestMatch > 0) bestValue[i] = bestMatch;
             }
         }
         int maxIndex = 0;
@@ -82,46 +48,6 @@ public class AI {
         int bestItem = -1;
         if (player.noItems() > 0) {
             int weight = 0;
-            for (int i = 0; i < player.noItems(); i++) {
-                for (Effect effect : player.getItem(i).getEffects()) {
-                    if (effect.checkConditions(player, opponent, card, null, "") && effect.checkEffect("null-ability") && card.getAbility() == Ability.TRUANT) {
-                        if (weight < 2) {
-                            weight = 2;
-                            bestItem = i;
-                        }
-                    }
-                    if (effect.checkConditions(player, opponent, card, null, "") && effect.checkEffect("modify-weakness") && card.getAbility() == Ability.HIDDEN_POWER) {
-                        if (weight < 2) {
-                            weight = 2;
-                            bestItem = i;
-                        }
-                    }
-                    if (effect.checkConditions(player, opponent, card, null, "") && effect.checkEffect("swap-card")) {
-                        if (weight < 1) {
-                            weight = 1;
-                            bestItem = i;
-                        }
-                    }
-                    if (effect.checkConditions(player, opponent, card, null, "") && effect.checkEffect("randomize-attribute")) {
-                        if (weight < 1) {
-                            weight = 1;
-                            bestItem = i;
-                        }
-                    }
-                    if (effect.checkConditions(player, opponent, card, null, "") && effect.checkEffect("replay-card") && card.getStatAverage() > 80) {
-                        if (weight < 1) {
-                            weight = 1;
-                            bestItem = i;
-                        }
-                    }
-                    if (effect.checkConditions(player, opponent, card, null, "") && effect.checkEffect("modify-speed") && effect.apply(0) > 0) {
-                        if (weight < 1) {
-                            weight = 1;
-                            bestItem = i;
-                        }
-                    }
-                }
-            }
         }
         preferredItem = bestItem;
     }

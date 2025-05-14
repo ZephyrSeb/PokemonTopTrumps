@@ -23,6 +23,7 @@ public class StartScreen extends AppCompatActivity {
         Type.init();
         Ability.init(this);
         Item.init(this);
+        CardRegistry.init(this);
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -34,11 +35,21 @@ public class StartScreen extends AppCompatActivity {
         });
 
         Intent intent = new Intent(this, GameScreen.class);
+        intent.putExtra("mode", "free_play");
         Button startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(v -> {
             Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
             startButton.startAnimation(buttonPulse);
             startActivity(intent);
+        });
+
+        Intent intentClassic = new Intent(this, GameScreen.class);
+        intentClassic.putExtra("mode", "classic");
+        Button classicButton = findViewById(R.id.classicButton);
+        classicButton.setOnClickListener(v -> {
+            Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
+            classicButton.startAnimation(buttonPulse);
+            startActivity(intentClassic);
         });
 
         Intent intent2 = new Intent(this, RulesScreen.class);
@@ -47,6 +58,22 @@ public class StartScreen extends AppCompatActivity {
             Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
             rulesButton.startAnimation(buttonPulse);
             startActivity(intent2);
+        });
+
+        Intent intent3 = new Intent(this, CollectionScreen.class);
+        Button collectionButton = findViewById(R.id.collectionButton);
+        collectionButton.setOnClickListener(v -> {
+            Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
+            collectionButton.startAnimation(buttonPulse);
+            startActivity(intent3);
+        });
+
+        Intent intent4 = new Intent(this, SettingsScreen.class);
+        Button settingsButton = findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(v -> {
+            Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
+            settingsButton.startAnimation(buttonPulse);
+            startActivity(intent4);
         });
     }
 }
