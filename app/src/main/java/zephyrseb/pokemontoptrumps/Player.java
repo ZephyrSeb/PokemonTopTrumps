@@ -1,5 +1,13 @@
 package zephyrseb.pokemontoptrumps;
 
+import android.content.Context;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,17 +22,26 @@ public class Player {
     private int score;
     public Boolean megaEvolve = true;
     private int currentStat = 0;
-    private Map<String, Integer> levels = new HashMap<>();
+    private Map<Attributes, Integer> levels = new HashMap<>();
     private int speed = 0;
     private int critRate = 0;
-    private double critMultiplier = 2d;
+    private double critMultiplier = 1.5d;
+    private double critPointMultiplier = 1d;
     private boolean supereffectiveHit = false;
     private double supereffectiveMultiplier = 1.5d;
     private Card currentCard;
     private Item currentItem;
-    private int counterCharge = 0;
-    private String danceStat = "";
-    private StatusCondition status = null;
+    private boolean charge = false;
+    private boolean useCharge = false;
+    private Attributes danceStat = null;
+    private int breakPoints = 0;
+    private StatusCondition status = StatusCondition.NONE;
+    private int statusLevel = 0;
+    private List<ContinuousEffect> delayedEffects = new ArrayList<>();
+    private Aura currentAura = Aura.NONE;
+    private Berry[] berryPouch = {Berry.NONE, Berry.NONE, Berry.NONE};
+    private boolean autoWin = false;
+
 
     public Player(String n) {
         name = n;
@@ -85,6 +102,10 @@ public class Player {
 
     public void setPlayedItem(Item i) {
         currentItem = i;
+    }
+
+    public boolean checkType(Card c, Type t) {
+        return c.getType() == t || Aura.getType(getCurrentAura()) == t;
     }
 
     public Card playCard() {
@@ -168,21 +189,29 @@ public class Player {
         speed = i;
     }
 
-    public void setLevel(String s, int i) {
+    public void setLevel(Attributes s, int i) {
         levels.put(s,i);
+        if (levels.get(s) > 3) levels.put(s, 3);
+        if (levels.get(s) < -3) levels.put(s, -3);
     }
 
-    public int getLevel(String s) {
+    public int getLevel(Attributes s) {
         return levels.get(s);
     }
 
+    public void incrementLevel(Attributes s, int i) {
+        levels.put(s, levels.get(s) + i);
+        if (levels.get(s) > 3) levels.put(s, 3);
+        if (levels.get(s) < -3) levels.put(s, -3);
+    }
+
     public void resetLevels() {
-        levels.put("hp",0);
-        levels.put("atk",0);
-        levels.put("def",0);
-        levels.put("spatk",0);
-        levels.put("spdef",0);
-        levels.put("spd",0);
+        levels.put(Attributes.HP,0);
+        levels.put(Attributes.ATK,0);
+        levels.put(Attributes.DEF,0);
+        levels.put(Attributes.SPATK,0);
+        levels.put(Attributes.SPDEF,0);
+        levels.put(Attributes.SPD,0);
     }
 
     public int getCritRate() {
@@ -191,6 +220,13 @@ public class Player {
 
     public void setCritRate(int i) {
         critRate = i;
+        if (critRate < 0) critRate = 0;
+        if (critRate > 4) critRate = 4;
+    }
+    public void incrementCritRate(int i) {
+        critRate += i;
+        if (critRate < 0) critRate = 0;
+        if (critRate > 4) critRate = 4;
     }
 
     public double getCritMultiplier() {
@@ -199,6 +235,14 @@ public class Player {
 
     public void setCritMultiplier(double d) {
         critMultiplier = d;
+    }
+
+    public double getCritPointMultiplier() {
+        return critPointMultiplier;
+    }
+
+    public void setCritPointMultiplier(double d) {
+        critPointMultiplier = d;
     }
 
     public boolean getSupereffectiveHit() {
@@ -217,19 +261,25 @@ public class Player {
         supereffectiveMultiplier = d;
     }
 
-    public int getCounterCharge() {
-        return counterCharge;
+    public boolean getCharge() {
+        return charge;
+    }
+    public boolean getUsedCharge() {
+        return useCharge;
     }
 
-    public void setCounterCharge(int i) {
-        counterCharge = i;
+    public void setCharge(boolean b) {
+        charge = b;
+    }
+    public void setUsedCharge(boolean b) {
+        useCharge = b;
     }
 
-    public String getDanceStat() {
+    public Attributes getDanceStat() {
         return danceStat;
     }
 
-    public void setDanceStat(String s) {
+    public void setDanceStat(Attributes s) {
         danceStat = s;
     }
 
@@ -239,14 +289,152 @@ public class Player {
 
     public void setStatusCondition(StatusCondition s) {
         status = s;
+        statusLevel = 0;
+    }
+
+    public void setStatusLevel(int i) {
+        statusLevel = i;
+    }
+
+    public int getStatusLevel() {
+        return statusLevel;
     }
 
     public void reset() {
         critMultiplier = 1.5d;
+        critPointMultiplier = 1d;
         critRate = 0;
         supereffectiveMultiplier = 2d;
         supereffectiveHit = false;
         resetLevels();
         setSpeed(0);
+        autoWin = false;
+        if (getUsedCharge()) {
+            setCharge(false);
+            setUsedCharge(false);
+        }
+    }
+
+    public List<ContinuousEffect> getDelayedEffects() {
+        return delayedEffects;
+    }
+
+    public void addDelayedEffect(Effect e, int i) {
+        delayedEffects.add(new ContinuousEffect(e,i));
+    }
+
+    public void clearDelayedEffects() {
+        for (int i = 0; i < delayedEffects.size(); i++) {
+            delayedEffects.get(i).reduceTurns();
+        }
+        delayedEffects.removeIf(ContinuousEffect::timeout);
+    }
+
+    public Aura getCurrentAura() {
+        return currentAura;
+    }
+
+    public void setCurrentAura(Aura aura) {
+        currentAura = aura;
+    }
+
+    public Berry getBerry(int i) {
+        if (i >= 0 && i< 3) return berryPouch[i];
+        else return Berry.NONE;
+    }
+
+    public boolean addBerry(Berry b) {
+        if (berryPouch[0] == Berry.NONE) {berryPouch[0] = b; return true;}
+        if (berryPouch[1] == Berry.NONE) {berryPouch[1] = b; return true;}
+        if (berryPouch[2] == Berry.NONE) {berryPouch[2] = b; return true;}
+        return false;
+    }
+
+    public void removeBerry(int i) {
+        berryPouch[i] = Berry.NONE;
+    }
+
+    public int getBreakPoints() {
+        return breakPoints;
+    }
+
+    public void setBreakPoints(int i) {
+        breakPoints = i;
+        if (breakPoints < 0) breakPoints = 0;
+        if (breakPoints > 10) breakPoints = 10;
+    }
+
+    public void incrementBreakPoints(int i) {
+        breakPoints += i;
+        if (breakPoints < 0) breakPoints = 0;
+        if (breakPoints > 10) breakPoints = 10;
+    }
+
+    public void setAutoWin(boolean b) {
+        autoWin = b;
+    }
+
+    public boolean getAutoWin() {
+        return autoWin;
+    }
+
+    public void displayBanner(Context ctx, ConstraintLayout banner, int points) {
+        if (getStatusCondition() != StatusCondition.NONE) {
+            banner.findViewById(R.id.statusIcon).setVisibility(View.VISIBLE);
+        }
+        else {
+            banner.findViewById(R.id.statusIcon).setVisibility(View.INVISIBLE);
+        }
+        ((ImageView)banner.findViewById(R.id.statusIcon)).setImageResource(StatusCondition.getImage(ctx, getStatusCondition()));
+        ((TextView)banner.findViewById(R.id.playerName)).setText(getName());
+        if (getBerry(0) != Berry.NONE) ((ImageView)banner.findViewById(R.id.berry1)).setImageResource(getBerry(0).getImage());
+        if (getBerry(1) != Berry.NONE) ((ImageView)banner.findViewById(R.id.berry2)).setImageResource(getBerry(1).getImage());
+        if (getBerry(2) != Berry.NONE) ((ImageView)banner.findViewById(R.id.berry3)).setImageResource(getBerry(2).getImage());
+        if (getCharge()) banner.findViewById(R.id.chargeCounter).setVisibility(View.VISIBLE);
+        else banner.findViewById(R.id.chargeCounter).setVisibility(View.INVISIBLE);
+        bannerBreak(banner.findViewById(R.id.bannerBreak), getBreakPoints());
+        ((ImageView)banner.findViewById(R.id.bannerAura)).setImageResource(Aura.getBanner(getCurrentAura()));
+
+        ImageView score = banner.findViewById(R.id.score);
+        score.requestLayout();
+        score.getLayoutParams().width = (int)Math.max(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, ctx.getResources().getDisplayMetrics()) * (6 - points),1);
+    }
+
+    private void bannerBreak(ImageView banner, int i) {
+        switch (i) {
+            case 0:
+                banner.setImageResource(R.drawable.break_0);
+                break;
+            case 1:
+                banner.setImageResource(R.drawable.break_1);
+                break;
+            case 2:
+                banner.setImageResource(R.drawable.break_2);
+                break;
+            case 3:
+                banner.setImageResource(R.drawable.break_3);
+                break;
+            case 4:
+                banner.setImageResource(R.drawable.break_4);
+                break;
+            case 5:
+                banner.setImageResource(R.drawable.break_5);
+                break;
+            case 6:
+                banner.setImageResource(R.drawable.break_6);
+                break;
+            case 7:
+                banner.setImageResource(R.drawable.break_7);
+                break;
+            case 8:
+                banner.setImageResource(R.drawable.break_8);
+                break;
+            case 9:
+                banner.setImageResource(R.drawable.break_9);
+                break;
+            case 10:
+                banner.setImageResource(R.drawable.break_10);
+                break;
+        }
     }
 }

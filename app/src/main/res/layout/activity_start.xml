@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartScreen"
+    tools:context=".Screens.StartScreen"
     android:background="@drawable/background_gradient">
 
     <TextView
@@ -75,6 +75,20 @@
         android:fontFamily="@font/futura_medium_bt"
         android:translationZ="8dp"
         app:layout_constraintTop_toBottomOf="@+id/rulesButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/deckButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="Deck Manager"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/collectionButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -1,6 +1,8 @@
-package zephyrseb.pokemontoptrumps;
+package zephyrseb.pokemontoptrumps.comparators;
 
 import java.util.Comparator;
+
+import zephyrseb.pokemontoptrumps.EffectAction;
 
 public class EffectComparator implements Comparator<EffectAction>  {
     public int compare(EffectAction e1, EffectAction e2) {

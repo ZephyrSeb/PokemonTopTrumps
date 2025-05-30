@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="288dp"
     android:layout_height="400dp"
-    android:scaleX="1"
-    android:scaleY="1"
     android:id="@+id/cardRaw">
 
     <ImageView
@@ -289,6 +287,72 @@
         app:layout_constraintEnd_toEndOf="@+id/cardFrame"
         app:layout_constraintTop_toBottomOf="@+id/spdef" />
 
+    <ImageView
+        android:id="@+id/darknessHP"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="43dp"
+        android:src="@drawable/attribute_selection_dark"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/darknessATK"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="58dp"
+        android:src="@drawable/attribute_selection_dark"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/darknessDEF"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="73dp"
+        android:src="@drawable/attribute_selection_dark"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/darknessSPATK"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="88dp"
+        android:src="@drawable/attribute_selection_dark"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/darknessSPDEF"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="103dp"
+        android:src="@drawable/attribute_selection_dark"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
+    <ImageView
+        android:id="@+id/darknessSPD"
+        android:layout_width="240dp"
+        android:layout_height="16dp"
+        android:translationY="118dp"
+        android:src="@drawable/attribute_selection_dark"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        app:layout_constraintStart_toStartOf="@+id/cardFrame"
+        app:layout_constraintTop_toBottomOf="@+id/cardImage" />
+
     <TextView
         android:id="@+id/wks"
         android:layout_width="wrap_content"
@@ -311,6 +375,28 @@
         app:layout_constraintStart_toEndOf="@+id/wks"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="25dp" />
+
+    <ImageView
+        android:id="@+id/pointIcon"
+        android:layout_width="12sp"
+        android:layout_height="12sp"
+        android:src="@drawable/icon_point_black"
+        app:layout_constraintBottom_toBottomOf="@+id/cardFrame"
+        app:layout_constraintEnd_toEndOf="@+id/cardFrame"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="26dp"/>
+
+    <TextView
+        android:id="@+id/pointText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/pointIcon"
+        app:layout_constraintBottom_toBottomOf="@id/cardFrame"
+        android:layout_marginBottom="24dp"/>
 
     <ImageView
         android:id="@+id/weaknessBurst"
@@ -488,5 +574,14 @@
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@id/statChange1_2"
         app:layout_constraintTop_toTopOf="@id/spd"/>
+
+    <ImageView
+        android:id="@+id/checkmark"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/icon_select"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

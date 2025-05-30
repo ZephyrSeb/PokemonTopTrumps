@@ -13,7 +13,7 @@
         android:theme="@style/Theme.PokemonTopTrumps"
         tools:targetApi="31">
         <activity
-            android:name=".StartScreen"
+            android:name=".Screens.StartScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameScreen"/>
-        <activity android:name=".RulesScreen"/>
-        <activity android:name=".CollectionScreen"/>
-        <activity android:name=".SettingsScreen"/>
+        <activity android:name=".Screens.GameScreen"/>
+        <activity android:name=".Screens.RulesScreen"/>
+        <activity android:name=".Screens.CollectionScreen"/>
+        <activity android:name=".Screens.SettingsScreen"/>
+        <activity android:name=".Screens.DeckBuilderScreen"/>
+        <activity android:name=".Screens.DeckRegistryScreen"/>
+        <activity android:name=".Screens.GameSetupScreen"/>
     </application>
 
 </manifest>

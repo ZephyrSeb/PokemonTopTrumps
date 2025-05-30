@@ -1,4 +1,4 @@
-package zephyrseb.pokemontoptrumps;
+package zephyrseb.pokemontoptrumps.Screens;
 
 import android.app.ActionBar;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import zephyrseb.pokemontoptrumps.R;
 
 public class RulesScreen extends AppCompatActivity {
 

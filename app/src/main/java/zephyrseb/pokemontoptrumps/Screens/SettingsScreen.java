@@ -1,4 +1,4 @@
-package zephyrseb.pokemontoptrumps;
+package zephyrseb.pokemontoptrumps.Screens;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
+
+import zephyrseb.pokemontoptrumps.R;
+import zephyrseb.pokemontoptrumps.SaveData;
 
 public class SettingsScreen extends AppCompatActivity {
 
@@ -26,13 +31,29 @@ public class SettingsScreen extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
         Intent intent = new Intent(this, StartScreen.class);
         Button startButton = findViewById(R.id.returnButton);
+        SaveData playerData = new SaveData();
+        playerData = playerData.readFile(this);
+        EditText nameText = findViewById(R.id.nameEditable);
+        nameText.setText(playerData.getName());
+        SaveData finalPlayerData = playerData;
         startButton.setOnClickListener(v -> {
+            name = nameText.getText().toString();
+            finalPlayerData.setName(name);
+            finalPlayerData.writeFile(this);
+
             Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
             startButton.startAnimation(buttonPulse);
             startActivity(intent);
         });
 
-        EditText nameText = findViewById(R.id.nameEditable);
-        name = nameText.getText().toString();
+        Button deleteButton = findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(v -> {
+            File file = new File(getApplicationContext().getFilesDir(), "playerData.json");
+            boolean deleted = file.delete();
+
+            Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
+            deleteButton.startAnimation(buttonPulse);
+            startActivity(intent);
+        });
     }
 }

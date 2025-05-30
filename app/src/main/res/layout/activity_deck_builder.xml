@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activityDeckBuilder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleX="1"
+    android:scaleY="1"
+    android:background="@drawable/background_gradient">
+
+    <ImageView
+        android:id="@+id/topBorder"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@color/buttonDefault"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gill_sans"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/deckNameEditable"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gill_sans"
+        app:layout_constraintStart_toEndOf="@id/name"
+        app:layout_constraintTop_toTopOf="@id/name"
+        app:layout_constraintBottom_toBottomOf="@id/name"/>
+
+    <ImageView
+        android:id="@+id/deckIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_deck_black"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/pointIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_pokeball_black"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deckIcon"/>
+
+    <TextView
+        android:id="@+id/deckCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="18sp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/deckIcon"
+        app:layout_constraintTop_toTopOf="@id/deckIcon"
+        app:layout_constraintBottom_toBottomOf="@id/deckIcon"/>
+
+    <TextView
+        android:id="@+id/pointCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="18sp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/pointIcon"
+        app:layout_constraintTop_toTopOf="@id/pointIcon"
+        app:layout_constraintBottom_toBottomOf="@id/pointIcon"/>
+
+    <ImageView
+        android:id="@+id/type1"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/type_fire"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="@id/topBorder"
+        app:layout_constraintBottom_toBottomOf="@id/topBorder"/>
+
+    <ImageView
+        android:id="@+id/type2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/type_fire"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintStart_toStartOf="@id/topBorder"
+        app:layout_constraintBottom_toBottomOf="@id/topBorder"/>
+
+    <ImageView
+        android:id="@+id/type3"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/type_fire"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="56dp"
+        app:layout_constraintStart_toStartOf="@id/topBorder"
+        app:layout_constraintBottom_toBottomOf="@id/topBorder"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scrollArea"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBorder"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="Save"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintEnd_toStartOf="@id/cancelButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="Cancel"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/saveButton"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/empty_button"
+        android:id="@+id/sortOptions"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBorder"/>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/empty_button"
+        android:shadowRadius="32"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:translationZ="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/deleteIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/icon_bin_black"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="@id/deleteButton"
+        app:layout_constraintBottom_toBottomOf="@id/deleteButton"
+        app:layout_constraintTop_toTopOf="@id/deleteButton"
+        app:layout_constraintStart_toStartOf="@id/deleteButton"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

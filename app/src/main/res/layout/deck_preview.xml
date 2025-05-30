@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/deckPreview">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="320dp"
+        android:layout_height="100dp"
+        android:src="@color/buttonDefault"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NAME"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"/>
+
+    <TextView
+        android:id="@+id/newDeck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textSize="48sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"/>
+
+    <ImageView
+        android:id="@+id/type1"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/type_fire"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"/>
+
+    <ImageView
+        android:id="@+id/type2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/type_fire"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"/>
+
+    <ImageView
+        android:id="@+id/type3"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/type_fire"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="56dp"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

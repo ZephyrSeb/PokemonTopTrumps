@@ -1,5 +1,7 @@
 package zephyrseb.pokemontoptrumps;
 
+import zephyrseb.pokemontoptrumps.Screens.GameScreen;
+
 public class AI {
     private boolean canMegaEvolve;
     private boolean hasPriority;
@@ -10,7 +12,7 @@ public class AI {
     private Player player;
     private Player opponent;
     private GameScreen game;
-    private final String[] attributes = {"hp", "atk", "def", "spatk", "spdef", "spd"};
+    private final Attributes[] attributes = {Attributes.HP, Attributes.ATK, Attributes.DEF, Attributes.SPATK, Attributes.SPDEF, Attributes.SPD};
     public AI(GameScreen g, Card c, boolean e, boolean p, Player p1, Player p2) {
         game = g;
         card = c;
@@ -33,6 +35,12 @@ public class AI {
                 }
             }
         }
+        if (!game.checkAvailableAttribute(Attributes.HP)) bestValue[0] = 0;
+        if (!game.checkAvailableAttribute(Attributes.ATK)) bestValue[1] = 0;
+        if (!game.checkAvailableAttribute(Attributes.DEF)) bestValue[2] = 0;
+        if (!game.checkAvailableAttribute(Attributes.SPATK)) bestValue[3] = 0;
+        if (!game.checkAvailableAttribute(Attributes.SPDEF)) bestValue[4] = 0;
+        if (!game.checkAvailableAttribute(Attributes.SPD)) bestValue[5] = 0;
         int maxIndex = 0;
         for (int i = 0; i < 6; i++) {
             if (bestValue[i] > bestValue[maxIndex]) maxIndex = i;
@@ -56,22 +64,22 @@ public class AI {
         if (preferredItem == -1) return null;
         else return player.getItem(preferredItem);
     }
-    public String getPreferredStat() {
+    public Attributes getPreferredStat() {
         switch (preferredStat) {
             case 0:
-                return "hp";
+                return Attributes.HP;
             case 1:
-                return "atk";
+                return Attributes.ATK;
             case 2:
-                return "def";
+                return Attributes.DEF;
             case 3:
-                return "spatk";
+                return Attributes.SPATK;
             case 4:
-                return "spdef";
+                return Attributes.SPDEF;
             case 5:
-                return "spd";
+                return Attributes.SPD;
             default:
-                return "";
+                return null;
         }
     }
     public boolean getPreferredME() {

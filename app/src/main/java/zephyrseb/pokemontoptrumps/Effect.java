@@ -1,5 +1,7 @@
 package zephyrseb.pokemontoptrumps;
 
+import zephyrseb.pokemontoptrumps.Screens.GameScreen;
+
 public class Effect {
     private final EffectFunction effect;
     private int priority;
@@ -23,6 +25,3 @@ public class Effect {
     }
 }
 
-interface EffectFunction {
-    void run(GameScreen game, Player player, Player opponent);
-}
