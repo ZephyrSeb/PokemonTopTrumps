@@ -9,14 +9,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SaveData {
     private String name;
     private List<CardRegistry> collection = new ArrayList<>();
+    private List<ItemRegistry> itemCollection = new ArrayList<>();
     private List<Deck> deckList = new ArrayList<>();
+    private int winStreakFreePlay = 0;
+    private int winStreakBattleTower = 0;
+    private int winStreakBattleFactory = 0;
+    private int winStreakBattleArcade = 0;
+    private int winStreakBattleDojo = 0;
+    private int winStreakBattleStage = 0;
+    private int battlePoints = 0;
 
     public SaveData() {
-
     }
 
     public String getName() {
@@ -31,8 +39,16 @@ public class SaveData {
         collection.add(cr);
     }
 
+    public void addItem(ItemRegistry ir) {
+        itemCollection.add(ir);
+    }
+
     public List<CardRegistry> getCollection() {
         return collection;
+    }
+
+    public List<ItemRegistry> getItemCollection() {
+        return itemCollection;
     }
 
     public void addDeck(Deck d) {
@@ -53,6 +69,35 @@ public class SaveData {
 
     public void deleteDeck(int i) {
         deckList.remove(i);
+    }
+
+    public int getBattlePoints() {
+        return battlePoints;
+    }
+
+    public void setBattlePoints(int bp) {
+        battlePoints = bp;
+    }
+
+    public int getWinStreak(String s) {
+        return switch (s) {
+            case "free_play" -> winStreakFreePlay;
+            case "battle_tower" -> winStreakBattleTower;
+            case "battle_factory" -> winStreakBattleFactory;
+            case "battle_arcade" -> winStreakBattleArcade;
+            case "battle_dojo" -> winStreakBattleDojo;
+            case "battle_stage" -> winStreakBattleStage;
+            default -> 0;
+        };
+    }
+
+    public void setWinStreak(String s, int i) {
+        if (Objects.equals(s, "free_play")) winStreakFreePlay = i;
+        if (Objects.equals(s, "battle_tower")) winStreakBattleTower = i;
+        if (Objects.equals(s, "battle_factory")) winStreakBattleFactory = i;
+        if (Objects.equals(s, "battle_arcade")) winStreakBattleArcade = i;
+        if (Objects.equals(s, "battle_dojo")) winStreakBattleDojo = i;
+        if (Objects.equals(s, "battle_stage")) winStreakBattleStage = i;
     }
 
     public void writeFile(Context ctx) {
@@ -84,7 +129,6 @@ public class SaveData {
         } catch (IOException e) {
             return null;
         }
-        //System.out.println(result);
         return gson.fromJson(result.toString(), SaveData.class);
     }
 }

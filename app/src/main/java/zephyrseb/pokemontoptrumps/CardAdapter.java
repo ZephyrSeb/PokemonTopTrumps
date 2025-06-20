@@ -1,12 +1,16 @@
 package zephyrseb.pokemontoptrumps;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,6 +74,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 popupWindow.getContentView().setScaleX(1.4f);
                 popupWindow.getContentView().setScaleY(1.4f);
                 CardRegistry.initCard(context, localDataSet.get(position)).displayCard(context, popupWindow.getContentView().findViewById(R.id.cardRaw));
+
+                ImageView abilityIcon = popupWindow.getContentView().findViewById(R.id.abilityIcon);
+                abilityIcon.setOnClickListener(u -> {
+                    LayoutInflater inflater2 = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    @SuppressLint("InflateParams") PopupWindow popupWindow2 = new PopupWindow(inflater2.inflate(R.layout.ability_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+                    popupWindow2.showAtLocation(((CollectionScreen) context).findViewById(R.id.collection), Gravity.CENTER, 0, 0);
+                    Card card = CardRegistry.initCard(context, localDataSet.get(position));
+                    ((TextView) popupWindow2.getContentView().findViewById(R.id.abilityName)).setText(String.valueOf(card.getAbility().getName()));
+                    ((TextView) popupWindow2.getContentView().findViewById(R.id.abilityDescription)).setText(String.valueOf(card.getAbility().getDescription()));
+                });
                 return true;
             });
         }
@@ -101,6 +115,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 popupWindow.getContentView().setScaleX(1.4f);
                 popupWindow.getContentView().setScaleY(1.4f);
                 CardRegistry.initCard(context, localDataSet.get(position)).displayCard(context, popupWindow.getContentView().findViewById(R.id.cardRaw));
+
+                ImageView abilityIcon = popupWindow.getContentView().findViewById(R.id.abilityIcon);
+                abilityIcon.setOnClickListener(u -> {
+                    LayoutInflater inflater2 = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    @SuppressLint("InflateParams") PopupWindow popupWindow2 = new PopupWindow(inflater2.inflate(R.layout.ability_popup, null), ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+                    popupWindow2.showAtLocation(((DeckBuilderScreen) context).findViewById(R.id.activityDeckBuilder), Gravity.CENTER, 0, 0);
+                    Card card = CardRegistry.initCard(context, localDataSet.get(position));
+                    ((TextView) popupWindow2.getContentView().findViewById(R.id.abilityName)).setText(String.valueOf(card.getAbility().getName()));
+                    ((TextView) popupWindow2.getContentView().findViewById(R.id.abilityDescription)).setText(String.valueOf(card.getAbility().getDescription()));
+                });
                 return true;
             });
         }

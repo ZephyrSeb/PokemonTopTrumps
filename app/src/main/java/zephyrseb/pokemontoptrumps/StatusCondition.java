@@ -1,44 +1,38 @@
 package zephyrseb.pokemontoptrumps;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public enum StatusCondition {
-    BURNED,
-    PARALYZED,
-    POISONED,
-    FROZEN,
-    FROSTBITTEN,
-    CONFUSED,
-    ASLEEP,
-    NONE;
+    BURNED(R.string.status_effect_name_burned, R.string.status_effect_description_burned, R.drawable.icon_burned),
+    PARALYZED(R.string.status_effect_name_paralyzed, R.string.status_effect_description_paralyzed, R.drawable.icon_paralyzed),
+    POISONED(R.string.status_effect_name_poisoned, R.string.status_effect_description_poisoned, R.drawable.icon_poisoned),
+    FROZEN(R.string.status_effect_name_frozen, R.string.status_effect_description_frozen, R.drawable.icon_frozen),
+    FROSTBITTEN(R.string.status_effect_name_frostbitten, R.string.status_effect_description_frostbitten, R.drawable.icon_frostbitten),
+    CONFUSED(R.string.status_effect_name_confused, R.string.status_effect_description_confused, R.drawable.icon_confused),
+    ASLEEP(R.string.status_effect_name_asleep, R.string.status_effect_description_asleep, R.drawable.icon_asleep),
+    BLINDED(R.string.status_effect_name_blinded, R.string.status_effect_description_blinded, R.drawable.icon_blinded),
+    NONE(R.string.status_effect_name_burned, R.string.status_effect_description_burned, R.drawable.icon_blank);
 
-    public static String setName(Context ctx, StatusCondition s) {
-        return switch (s) {
-            case BURNED -> ctx.getString(R.string.status_effect_name_burned);
-            case PARALYZED -> ctx.getString(R.string.status_effect_name_paralyzed);
-            case POISONED -> ctx.getString(R.string.status_effect_name_poisoned);
-            case FROSTBITTEN -> ctx.getString(R.string.status_effect_name_frostbitten);
-            case FROZEN -> ctx.getString(R.string.status_effect_name_frozen);
-            case CONFUSED -> ctx.getString(R.string.status_effect_name_confused);
-            case ASLEEP -> ctx.getString(R.string.status_effect_name_asleep);
-            default -> "";
-        };
+    private final int name;
+    private final int description;
+    private final int image;
+    StatusCondition(int n, int d, int i) {
+        name = n;
+        description = d;
+        image = i;
     }
 
-    public static String setDescription(Context ctx, StatusCondition s) {
-        return switch (s) {
-            case BURNED -> ctx.getString(R.string.status_effect_description_burned);
-            case PARALYZED -> ctx.getString(R.string.status_effect_description_paralyzed);
-            case POISONED -> ctx.getString(R.string.status_effect_description_poisoned);
-            case FROSTBITTEN -> ctx.getString(R.string.status_effect_description_frostbitten);
-            case FROZEN -> ctx.getString(R.string.status_effect_description_frozen);
-            case CONFUSED -> ctx.getString(R.string.status_effect_description_confused);
-            case ASLEEP -> ctx.getString(R.string.status_effect_description_asleep);
-            default -> "";
-        };
+    public int getName() {
+        return name;
+    }
+
+    public int getDescription() {
+        return description;
+    }
+
+    public int getImage() {
+        return image;
     }
 
     public static List<Effect> getEffects(StatusCondition e) {
@@ -47,60 +41,54 @@ public enum StatusCondition {
             case BURNED:
                 effects.add(new Effect((game, player, opponent) -> {
                     if (game.getActivePlayer() == player) {
-                        player.setLevel(Attributes.ATK, player.getLevel(Attributes.ATK) - 1);
+                        player.incrementLevel(Attributes.ATK, -1);
                     }
-                }, 1, "status"));
+                }, 1, "status", true));
                 break;
             case PARALYZED:
                 effects.add(new Effect((game, player, opponent) -> {
                     if (game.getActivePlayer() == player) {
-                        player.setLevel(Attributes.SPD, player.getLevel(Attributes.SPD) - 1);
+                        player.incrementLevel(Attributes.SPD, -1);
                     }
-                }, 1, "status"));
+                }, 1, "status", true));
                 break;
             case POISONED:
-                effects.add(new Effect((game, player, opponent) -> player.incrementBreakPoints(1 + player.getStatusLevel()), 0, "status"));
+                effects.add(new Effect((game, player, opponent) -> player.incrementBreakPoints(1 + player.getStatusLevel()), 0, "status", false));
                 break;
             case FROSTBITTEN:
                 effects.add(new Effect((game, player, opponent) -> {
                     if (game.getActivePlayer() == player) {
-                        player.setLevel(Attributes.SPATK, player.getLevel(Attributes.SPATK) - 1);
+                        player.incrementLevel(Attributes.SPATK, -1);
                     }
-                }, 1, "status"));
+                }, 1, "status", true));
                 break;
             case FROZEN:
                 break;
             case CONFUSED:
                 effects.add(new Effect((game, player, opponent) -> {
                     if (game.getActivePlayer() == player) {
-                        game.randomizeAttribute();
+                        game.randomizeAttribute(player);
                     }
-                }, 1, "status"));
+                }, 1, "status", false));
                 break;
             case ASLEEP:
                 effects.add(new Effect((game, player, opponent) -> {
                     if (game.getActivePlayer() == player) {
                         player.setSpeed(-1);
-                        player.setStatusCondition(NONE);
+                        player.removeStatusCondition();
                     }
-                }, 1, "status"));
+                }, 1, "status", false));
+                break;
+            case BLINDED:
+                effects.add(new Effect((game, player, opponent) -> {
+                    if (game.getActivePlayer() == player) {
+                        player.incrementLevel(Attributes.ACC, -1);
+                    }
+                }, 1, "status", true));
                 break;
             case NONE:
                 break;
         }
         return effects;
-    }
-
-    public static int getImage(Context ctx, StatusCondition s) {
-        return switch (s) {
-            case BURNED -> R.drawable.icon_burned;
-            case PARALYZED -> R.drawable.icon_paralyzed;
-            case POISONED -> R.drawable.icon_poisoned;
-            case FROSTBITTEN -> R.drawable.icon_frostbitten;
-            case FROZEN -> R.drawable.icon_frozen;
-            case CONFUSED -> R.drawable.icon_confused;
-            case ASLEEP -> R.drawable.icon_asleep;
-            default -> 0;
-        };
     }
 }

@@ -9,7 +9,7 @@
         android:id="@+id/background"
         android:layout_width="320dp"
         android:layout_height="100dp"
-        android:src="@color/buttonDefault"
+        android:src="@drawable/empty_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,58 +1,56 @@
 package zephyrseb.pokemontoptrumps;
 
 public enum Aura {
-    NONE,
-    NORMAL,
-    FIRE,
-    WATER,
-    GRASS,
-    ELECTRIC,
-    ICE,
-    FIGHTING,
-    PSYCHIC,
-    DARK,
-    FAIRY,
-    DRAGON,
-    STEEL,
-    GROUND,
-    STELLAR,
-    SHADOW;
+    NONE(Type.NONE, R.drawable.break_0),
+    NORMAL(Type.NORMAL, R.drawable.aura_normal),
+    FIRE(Type.FIRE, R.drawable.aura_fire),
+    WATER(Type.WATER, R.drawable.aura_water),
+    GRASS(Type.GRASS, R.drawable.aura_grass),
+    ELECTRIC(Type.ELECTRIC, R.drawable.aura_electric),
+    ICE(Type.ICE, R.drawable.aura_ice),
+    FIGHTING(Type.FIGHTING, R.drawable.aura_fighting),
+    PSYCHIC(Type.PSYCHIC, R.drawable.aura_psychic),
+    DARK(Type.DARK, R.drawable.aura_dark),
+    FAIRY(Type.FAIRY, R.drawable.aura_fairy),
+    DRAGON(Type.DRAGON, R.drawable.aura_dragon),
+    STEEL(Type.STEEL, R.drawable.aura_steel),
+    GROUND(Type.GROUND, R.drawable.aura_ground),
+    STELLAR(Type.STELLAR, R.drawable.break_0);
 
-    public static Type getType(Aura a) {
-        if (a == NONE) return null;
-        if (a == NORMAL) return Type.NORMAL;
-        if (a == FIRE) return Type.FIRE;
-        if (a == WATER) return Type.WATER;
-        if (a == GRASS) return Type.GRASS;
-        if (a == ELECTRIC) return Type.ELECTRIC;
-        if (a == ICE) return Type.ICE;
-        if (a == PSYCHIC) return Type.PSYCHIC;
-        if (a == DARK) return Type.DARK;
-        if (a == FIGHTING) return Type.FIGHTING;
-        if (a == GROUND) return Type.GROUND;
-        if (a == STEEL) return Type.STEEL;
-        if (a == DRAGON) return Type.DRAGON;
-        if (a == FAIRY) return Type.FAIRY;
-        if (a == STELLAR) return Type.STELLAR;
-        return null;
+    private final Type type;
+    private final int banner;
+
+    Aura(Type t, int b) {
+        type = t;
+        banner = b;
     }
 
-    public static int getBanner(Aura a) {
-        return switch (a) {
-            case NORMAL -> R.drawable.aura_normal;
-            case FIRE -> R.drawable.aura_fire;
-            case WATER -> R.drawable.aura_water;
-            case GRASS -> R.drawable.aura_grass;
-            case ELECTRIC -> R.drawable.aura_electric;
-            case ICE -> R.drawable.aura_ice;
-            case PSYCHIC -> R.drawable.aura_psychic;
-            case DARK -> R.drawable.aura_dark;
-            case FIGHTING -> R.drawable.aura_fighting;
-            case GROUND -> R.drawable.aura_ground;
-            case STEEL -> R.drawable.aura_steel;
-            case FAIRY -> R.drawable.aura_fairy;
-            case DRAGON -> R.drawable.aura_dragon;
-            default -> R.drawable.break_0;
+    public Type getType() {
+        return type;
+    }
+
+    public int getBanner() {
+        return banner;
+    }
+
+    public static Aura getAuraFromType(Type t) {
+        return switch(t) {
+            case Type.NONE -> NONE;
+            case Type.NORMAL -> NORMAL;
+            case Type.FIRE -> FIRE;
+            case Type.WATER -> WATER;
+            case Type.GRASS -> GRASS;
+            case Type.ELECTRIC -> ELECTRIC;
+            case Type.ICE -> ICE;
+            case Type.PSYCHIC -> PSYCHIC;
+            case Type.FIGHTING -> FIGHTING;
+            case Type.GROUND -> GROUND;
+            case Type.DARK -> DARK;
+            case Type.STEEL -> STEEL;
+            case Type.DRAGON -> DRAGON;
+            case Type.FAIRY -> FAIRY;
+            case Type.STELLAR -> STELLAR;
+            default -> NONE;
         };
     }
 }

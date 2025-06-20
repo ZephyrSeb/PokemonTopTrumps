@@ -74,10 +74,9 @@
         android:id="@+id/berry1"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/icon_pokeball_color"
+        android:src="@drawable/icon_blank"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="4dp"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -85,10 +84,9 @@
         android:id="@+id/berry2"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/icon_pokeball_color"
+        android:src="@drawable/icon_blank"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
-        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@id/berryBack1"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -96,10 +94,9 @@
         android:id="@+id/berry3"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/icon_pokeball_color"
+        android:src="@drawable/icon_blank"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
-        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@id/berryBack2"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -143,5 +140,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/delayedEffects"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:shadowRadius="32"
+        android:translationZ="8dp"
+        android:rotation="90"
+        android:layout_marginStart="4sp"
+        android:layout_marginBottom="4dp"
+        android:visibility="invisible"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/stat_raise"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,35 @@
 package zephyrseb.pokemontoptrumps;
 
-public class Type {
-    private final String name;
-    private int cardFrame;
-    private int typeIcon;
+import android.content.Context;
 
-    public Type(String n) {
+public enum Type {
+    NONE(R.string.type_name_normal, R.drawable.card_normal, R.drawable.icon_blank),
+    NORMAL(R.string.type_name_normal, R.drawable.card_normal, R.drawable.type_normal),
+    FIRE(R.string.type_name_fire, R.drawable.card_fire, R.drawable.type_fire),
+    WATER(R.string.type_name_water, R.drawable.card_water, R.drawable.type_water),
+    GRASS(R.string.type_name_grass, R.drawable.card_grass, R.drawable.type_grass),
+    ELECTRIC(R.string.type_name_electric, R.drawable.card_electric, R.drawable.type_electric),
+    ICE(R.string.type_name_ice, R.drawable.card_ice, R.drawable.type_ice),
+    PSYCHIC(R.string.type_name_psychic, R.drawable.card_psychic, R.drawable.type_psychic),
+    FIGHTING(R.string.type_name_fighting, R.drawable.card_fighting, R.drawable.type_fighting),
+    GROUND(R.string.type_name_ground, R.drawable.card_ground, R.drawable.type_ground),
+    DARK(R.string.type_name_dark, R.drawable.card_dark, R.drawable.type_dark),
+    STEEL(R.string.type_name_steel, R.drawable.card_steel, R.drawable.type_steel),
+    FAIRY(R.string.type_name_fairy, R.drawable.card_fairy, R.drawable.type_fairy),
+    DRAGON(R.string.type_name_dragon, R.drawable.card_dragon, R.drawable.type_dragon),
+    STELLAR(R.string.type_name_stellar, R.drawable.card_normal, R.drawable.type_stellar);
+    private final int name;
+    private final int cardFrame;
+    private final int typeIcon;
+
+    Type(int n, int frame, int type) {
         name = n;
+        cardFrame = frame;
+        typeIcon = type;
     }
 
-    public String getName() {
-        return name;
+    public String getName(Context ctx) {
+        return ctx.getString(name);
     }
 
     public int getFrame() {
@@ -20,47 +39,4 @@ public class Type {
     public int getIcon() {
         return typeIcon;
     }
-
-    public Type setFrame(int frame) {
-        cardFrame = frame;
-        return this;
-    }
-
-    /** @noinspection UnusedReturnValue*/
-    public Type setIcon(int icon) {
-        typeIcon = icon;
-        return this;
-    }
-
-    public static Type NORMAL = new Type("Normal");
-    public static Type FIRE = new Type("Fire");
-    public static Type WATER = new Type("Water");
-    public static Type GRASS = new Type("Grass");
-    public static Type ELECTRIC = new Type("Electric");
-    public static Type PSYCHIC = new Type("Psychic");
-    public static Type FIGHTING = new Type("Fighting");
-    public static Type GROUND = new Type("Ground");
-    public static Type STEEL = new Type("Steel");
-    public static Type DARK = new Type("Dark");
-    public static Type FAIRY = new Type("Fairy");
-    public static Type ICE = new Type("Ice");
-    public static Type DRAGON = new Type("Dragon");
-    public static Type STELLAR = new Type("Stellar");
-    public static void init() {
-        NORMAL.setFrame(R.drawable.card_normal).setIcon(R.drawable.type_normal);
-        FIRE.setFrame(R.drawable.card_fire).setIcon(R.drawable.type_fire);
-        WATER.setFrame(R.drawable.card_water).setIcon(R.drawable.type_water);
-        GRASS.setFrame(R.drawable.card_grass).setIcon(R.drawable.type_grass);
-        ELECTRIC.setFrame(R.drawable.card_electric).setIcon(R.drawable.type_electric);
-        PSYCHIC.setFrame(R.drawable.card_psychic).setIcon(R.drawable.type_psychic);
-        FIGHTING.setFrame(R.drawable.card_fighting).setIcon(R.drawable.type_fighting);
-        GROUND.setFrame(R.drawable.card_ground).setIcon(R.drawable.type_ground);
-        STEEL.setFrame(R.drawable.card_steel).setIcon(R.drawable.type_steel);
-        DARK.setFrame(R.drawable.card_dark).setIcon(R.drawable.type_dark);
-        FAIRY.setFrame(R.drawable.card_fairy).setIcon(R.drawable.type_fairy);
-        ICE.setFrame(R.drawable.card_ice).setIcon(R.drawable.type_ice);
-        DRAGON.setFrame(R.drawable.card_dragon).setIcon(R.drawable.type_dragon);
-        STELLAR.setFrame(R.drawable.card_stellar).setIcon(R.drawable.type_stellar);
-    }
-
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activityRules"
+    tools:context=".Screens.RulesScreen"
+    android:background="@drawable/background_gradient">
+
+    <Button
+        android:id="@+id/rulesBasic"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="@string/rules.name.basic_rules"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/rulesItems"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="@string/rules.name.items"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rulesBasic" />
+
+    <Button
+        android:id="@+id/rulesAbilities"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="@string/rules.name.abilities"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rulesItems" />
+
+    <Button
+        android:id="@+id/rulesMegaEvo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="@string/rules.name.mega_evolution"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rulesAbilities" />
+
+    <Button
+        android:id="@+id/rulesBreak"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="@string/rules.name.break"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rulesMegaEvo" />
+
+    <Button
+        android:id="@+id/rulesAuras"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="@string/rules.name.auras"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rulesBreak" />
+
+    <Button
+        android:id="@+id/rulesBerries"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:shadowRadius="32"
+        android:text="@string/rules.name.berries"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:translationZ="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rulesAuras" />
+
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_return_black"
+        android:shadowRadius="32"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:translationZ="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Return"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="11sp"
+        android:translationZ="10dp"
+        android:layout_marginBottom="-4dp"
+        app:layout_constraintBottom_toBottomOf="@id/returnButton"
+        app:layout_constraintStart_toStartOf="@id/returnButton"
+        app:layout_constraintEnd_toEndOf="@id/returnButton"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

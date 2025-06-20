@@ -2,10 +2,10 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <scale
         android:duration="250"
-        android:fromXScale="100%"
-        android:toXScale="500%"
-        android:fromYScale="100%"
-        android:toYScale="500%"
+        android:fromXScale="25%"
+        android:toXScale="125%"
+        android:fromYScale="25%"
+        android:toYScale="125%"
         android:pivotX="50%"
         android:pivotY="50%"
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>

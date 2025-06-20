@@ -2,6 +2,8 @@ package zephyrseb.pokemontoptrumps.Screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ public class DeckRegistryScreen extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+        final Handler handler = new Handler(Looper.getMainLooper());
 
         SaveData playerData = new SaveData();
         playerData = playerData.readFile(this);
@@ -65,7 +68,7 @@ public class DeckRegistryScreen extends AppCompatActivity {
             layout[i].setOnClickListener(v -> {
                 Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
                 layout[finalI].startAnimation(buttonPulse);
-                startActivity(intentDeck);
+                handler.postDelayed(() -> startActivity(intentDeck), 400);
             });
         }
 
@@ -87,7 +90,7 @@ public class DeckRegistryScreen extends AppCompatActivity {
         layout[deckList.size()].setOnClickListener(v -> {
             Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
             layout[deckList.size()].startAnimation(buttonPulse);
-            startActivity(intentNewDeck);
+            handler.postDelayed(() -> startActivity(intentNewDeck), 400);
         });
 
         Intent intent = new Intent(this, StartScreen.class);
@@ -95,7 +98,7 @@ public class DeckRegistryScreen extends AppCompatActivity {
         startButton.setOnClickListener(v -> {
             Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
             startButton.startAnimation(buttonPulse);
-            startActivity(intent);
+            handler.postDelayed(() -> startActivity(intent), 400);
         });
     }
 

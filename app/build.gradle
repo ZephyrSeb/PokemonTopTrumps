@@ -40,3 +40,9 @@ dependencies {
     implementation libs.gson
     implementation libs.glide
 }
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}

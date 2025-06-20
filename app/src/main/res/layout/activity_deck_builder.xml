@@ -48,12 +48,22 @@
         android:layout_height="24dp"
         android:src="@drawable/icon_deck_black"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/pointIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_point_black"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemIcon"/>
+
+    <ImageView
+        android:id="@+id/itemIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/icon_pokeball_black"
@@ -87,6 +97,19 @@
         app:layout_constraintEnd_toStartOf="@id/pointIcon"
         app:layout_constraintTop_toTopOf="@id/pointIcon"
         app:layout_constraintBottom_toBottomOf="@id/pointIcon"/>
+
+    <TextView
+        android:id="@+id/itemCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="18sp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/itemIcon"
+        app:layout_constraintTop_toTopOf="@id/itemIcon"
+        app:layout_constraintBottom_toBottomOf="@id/itemIcon"/>
 
     <ImageView
         android:id="@+id/type1"
@@ -157,11 +180,24 @@
         app:layout_constraintStart_toEndOf="@id/saveButton"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <Spinner
+    <zephyrseb.pokemontoptrumps.CustomSpinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/empty_button"
+        android:theme="@style/spinnerTheme"
         android:id="@+id/sortOptions"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBorder"/>
+
+    <zephyrseb.pokemontoptrumps.CustomSpinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/empty_button"
+        android:theme="@style/spinnerTheme"
+        android:id="@+id/sortOptionsItem"
+        android:visibility="invisible"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -181,13 +217,59 @@
 
     <ImageView
         android:id="@+id/deleteIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:src="@drawable/icon_bin_black"
         android:translationZ="10dp"
         app:layout_constraintEnd_toEndOf="@id/deleteButton"
         app:layout_constraintBottom_toBottomOf="@id/deleteButton"
         app:layout_constraintTop_toTopOf="@id/deleteButton"
         app:layout_constraintStart_toStartOf="@id/deleteButton"/>
+
+    <Button
+        android:id="@+id/switchButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:shadowRadius="32"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:translationZ="8dp"
+        app:layout_constraintTop_toBottomOf="@id/topBorder"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/switchIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_item_black"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="@id/switchButton"
+        app:layout_constraintBottom_toBottomOf="@id/switchButton"
+        app:layout_constraintTop_toTopOf="@id/switchButton"
+        app:layout_constraintStart_toStartOf="@id/switchButton"/>
+
+    <Button
+        android:id="@+id/filterButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:shadowRadius="32"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:translationZ="8dp"
+        app:layout_constraintTop_toBottomOf="@id/topBorder"
+        app:layout_constraintStart_toEndOf="@id/switchButton"/>
+
+    <ImageView
+        android:id="@+id/filterIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_filter_black"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="@id/filterButton"
+        app:layout_constraintBottom_toBottomOf="@id/filterButton"
+        app:layout_constraintTop_toTopOf="@id/filterButton"
+        app:layout_constraintStart_toStartOf="@id/filterButton"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

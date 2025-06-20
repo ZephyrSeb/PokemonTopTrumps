@@ -2,27 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rulesPopup"
-    android:layout_width="292dp"
+    android:layout_width="400dp"
     android:layout_height="526dp"
-    android:background="@drawable/popup_box">
+    android:background="@drawable/button_gradient">
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="48dp"
-        android:background="@drawable/blue_line"
+        android:background="@drawable/attribute_selection"
         android:elevation="8dp"
-        android:scaleX="10"
         android:shadowRadius="32"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/popup_box_outline" />
     <TextView
         android:id="@+id/ruleName"
         android:layout_width="wrap_content"
@@ -39,7 +33,7 @@
 
     <TextView
         android:id="@+id/ruleDescription"
-        android:layout_width="0dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"

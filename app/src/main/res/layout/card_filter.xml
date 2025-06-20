@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardFilter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/button_gradient">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="400dp"
+        android:layout_height="48dp"
+        android:background="@drawable/attribute_selection"
+        android:elevation="8dp"
+        android:shadowRadius="32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ruleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/gill_sans"
+        android:elevation="8dp"
+        android:text="Filter"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By Name"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="20sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/imageView5"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:id="@+id/nameEditable"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gill_sans"
+        app:layout_constraintStart_toEndOf="@id/name"
+        app:layout_constraintTop_toTopOf="@id/name"
+        app:layout_constraintBottom_toBottomOf="@id/name"/>
+
+    <TextView
+        android:id="@+id/ability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By Ability"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="20sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:id="@+id/abilityEditable"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gill_sans"
+        app:layout_constraintStart_toEndOf="@id/ability"
+        app:layout_constraintTop_toTopOf="@id/ability"
+        app:layout_constraintBottom_toBottomOf="@id/ability"/>
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By Type"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="20sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/ability"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/typeNormalButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/type"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_normal"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeNormalButton"
+        app:layout_constraintStart_toStartOf="@id/typeNormalButton"
+        app:layout_constraintEnd_toEndOf="@id/typeNormalButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeNormalButton"/>
+
+    <Button
+        android:id="@+id/typeFireButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeNormalButton"
+        app:layout_constraintTop_toBottomOf="@id/type"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_fire"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeFireButton"
+        app:layout_constraintStart_toStartOf="@id/typeFireButton"
+        app:layout_constraintEnd_toEndOf="@id/typeFireButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeFireButton"/>
+
+    <Button
+        android:id="@+id/typeWaterButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeFireButton"
+        app:layout_constraintTop_toBottomOf="@id/type"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_water"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeWaterButton"
+        app:layout_constraintStart_toStartOf="@id/typeWaterButton"
+        app:layout_constraintEnd_toEndOf="@id/typeWaterButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeWaterButton"/>
+
+    <Button
+        android:id="@+id/typeGrassButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeWaterButton"
+        app:layout_constraintTop_toBottomOf="@id/type"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_grass"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeGrassButton"
+        app:layout_constraintStart_toStartOf="@id/typeGrassButton"
+        app:layout_constraintEnd_toEndOf="@id/typeGrassButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeGrassButton"/>
+
+    <Button
+        android:id="@+id/typeElectricButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeGrassButton"
+        app:layout_constraintTop_toBottomOf="@id/type"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_electric"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeElectricButton"
+        app:layout_constraintStart_toStartOf="@id/typeElectricButton"
+        app:layout_constraintEnd_toEndOf="@id/typeElectricButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeElectricButton"/>
+
+    <Button
+        android:id="@+id/typeIceButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeElectricButton"
+        app:layout_constraintTop_toBottomOf="@id/type"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_ice"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeIceButton"
+        app:layout_constraintStart_toStartOf="@id/typeIceButton"
+        app:layout_constraintEnd_toEndOf="@id/typeIceButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeIceButton"/>
+
+    <Button
+        android:id="@+id/typePsychicButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeIceButton"
+        app:layout_constraintTop_toBottomOf="@id/type"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_psychic"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typePsychicButton"
+        app:layout_constraintStart_toStartOf="@id/typePsychicButton"
+        app:layout_constraintEnd_toEndOf="@id/typePsychicButton"
+        app:layout_constraintBottom_toBottomOf="@id/typePsychicButton"/>
+
+    <Button
+        android:id="@+id/typeFightingButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/typeNormalButton"
+        app:layout_constraintTop_toBottomOf="@id/typeNormalButton"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_fighting"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeFightingButton"
+        app:layout_constraintStart_toStartOf="@id/typeFightingButton"
+        app:layout_constraintEnd_toEndOf="@id/typeFightingButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeFightingButton"/>
+
+    <Button
+        android:id="@+id/typeGroundButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeFightingButton"
+        app:layout_constraintTop_toBottomOf="@id/typeNormalButton"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_ground"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeGroundButton"
+        app:layout_constraintStart_toStartOf="@id/typeGroundButton"
+        app:layout_constraintEnd_toEndOf="@id/typeGroundButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeGroundButton"/>
+
+    <Button
+        android:id="@+id/typeDarkButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeGroundButton"
+        app:layout_constraintTop_toBottomOf="@id/typeNormalButton"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_dark"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeDarkButton"
+        app:layout_constraintStart_toStartOf="@id/typeDarkButton"
+        app:layout_constraintEnd_toEndOf="@id/typeDarkButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeDarkButton"/>
+
+    <Button
+        android:id="@+id/typeSteelButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeDarkButton"
+        app:layout_constraintTop_toBottomOf="@id/typeNormalButton"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_steel"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeSteelButton"
+        app:layout_constraintStart_toStartOf="@id/typeSteelButton"
+        app:layout_constraintEnd_toEndOf="@id/typeSteelButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeSteelButton"/>
+
+    <Button
+        android:id="@+id/typeFairyButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeSteelButton"
+        app:layout_constraintTop_toBottomOf="@id/typeNormalButton"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_fairy"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeFairyButton"
+        app:layout_constraintStart_toStartOf="@id/typeFairyButton"
+        app:layout_constraintEnd_toEndOf="@id/typeFairyButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeFairyButton"/>
+
+    <Button
+        android:id="@+id/typeDragonButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeFairyButton"
+        app:layout_constraintTop_toBottomOf="@id/typeNormalButton"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_dragon"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeDragonButton"
+        app:layout_constraintStart_toStartOf="@id/typeDragonButton"
+        app:layout_constraintEnd_toEndOf="@id/typeDragonButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeDragonButton"/>
+
+    <Button
+        android:id="@+id/typeStellarButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/typeDragonButton"
+        app:layout_constraintTop_toBottomOf="@id/typeNormalButton"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="@drawable/type_stellar"
+        android:translationZ="10dp"
+        app:layout_constraintTop_toTopOf="@id/typeStellarButton"
+        app:layout_constraintStart_toStartOf="@id/typeStellarButton"
+        app:layout_constraintEnd_toEndOf="@id/typeStellarButton"
+        app:layout_constraintBottom_toBottomOf="@id/typeStellarButton"/>
+
+    <TextView
+        android:id="@+id/pointValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By Point Value"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="20sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/typeFightingButton"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/pointValue1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="1"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue2"/>
+
+    <Button
+        android:id="@+id/pointValue2"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="2"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue1"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue3"/>
+
+    <Button
+        android:id="@+id/pointValue3"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="3"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue2"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue4"/>
+
+    <Button
+        android:id="@+id/pointValue4"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="4"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue3"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue5"/>
+
+    <Button
+        android:id="@+id/pointValue5"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="5"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue4"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue6"/>
+
+    <Button
+        android:id="@+id/pointValue6"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="6"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue5"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue7"/>
+
+    <Button
+        android:id="@+id/pointValue7"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="7"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue6"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue8"/>
+
+    <Button
+        android:id="@+id/pointValue8"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="8"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue7"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue9"/>
+
+    <Button
+        android:id="@+id/pointValue9"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="9"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue8"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toStartOf="@id/pointValue10"/>
+
+    <Button
+        android:id="@+id/pointValue10"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="10"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/pointValue9"
+        app:layout_constraintTop_toBottomOf="@id/pointValue"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/highestStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By Highest Attribute"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="20sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/pointValue10"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/attrATK"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="Attack"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/highestStat"
+        app:layout_constraintEnd_toStartOf="@id/attrSPATK"/>
+
+    <Button
+        android:id="@+id/attrDEF"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:drawablePadding="15dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="Defense"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/attrATK"
+        app:layout_constraintEnd_toStartOf="@id/attrSPDEF"/>
+
+    <Button
+        android:id="@+id/attrSPATK"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="Sp. Attack"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/attrATK"
+        app:layout_constraintTop_toBottomOf="@id/highestStat"
+        app:layout_constraintEnd_toStartOf="@id/attrACC"/>
+
+    <Button
+        android:id="@+id/attrSPDEF"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:drawablePadding="15dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="Sp. Defense"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/attrATK"
+        app:layout_constraintTop_toBottomOf="@id/attrATK"
+        app:layout_constraintEnd_toStartOf="@id/attrEV"/>
+
+    <Button
+        android:id="@+id/attrACC"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="Accuracy"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/attrSPATK"
+        app:layout_constraintTop_toBottomOf="@id/highestStat"
+        app:layout_constraintEnd_toStartOf="@id/attrSPD"/>
+
+    <Button
+        android:id="@+id/attrEV"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:drawablePadding="15dp"
+        android:background="@drawable/empty_button"
+        android:layout_marginTop="8dp"
+        android:text="Evasion"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/attrSPATK"
+        app:layout_constraintTop_toBottomOf="@id/attrATK"
+        app:layout_constraintEnd_toStartOf="@id/attrSPD"/>
+
+    <Button
+        android:id="@+id/attrSPD"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:text="Speed"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        app:layout_constraintStart_toEndOf="@id/attrACC"
+        app:layout_constraintTop_toTopOf="@id/attrATK"
+        app:layout_constraintBottom_toBottomOf="@id/attrDEF"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/canEvolve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Can Evolve"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="20sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/attrDEF"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/canEvolveY"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_tick"
+        app:layout_constraintStart_toStartOf="@id/canMegaEvolveY"
+        app:layout_constraintTop_toTopOf="@id/canEvolve"
+        app:layout_constraintBottom_toBottomOf="@id/canEvolve"/>
+
+    <Button
+        android:id="@+id/canEvolveN"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_cross"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/canEvolveY"
+        app:layout_constraintTop_toTopOf="@id/canEvolve"
+        app:layout_constraintBottom_toBottomOf="@id/canEvolve"/>
+
+    <TextView
+        android:id="@+id/canMegaEvolve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Can Mega Evolve"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="20sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/canEvolve"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/canMegaEvolveY"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_tick"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/canMegaEvolve"
+        app:layout_constraintTop_toTopOf="@id/canMegaEvolve"
+        app:layout_constraintBottom_toBottomOf="@id/canMegaEvolve"/>
+
+    <Button
+        android:id="@+id/canMegaEvolveN"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_cross"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/canMegaEvolveY"
+        app:layout_constraintTop_toTopOf="@id/canMegaEvolve"
+        app:layout_constraintBottom_toBottomOf="@id/canMegaEvolve"/>
+
+    <TextView
+        android:id="@+id/inDeck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="In Deck"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="20sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/canMegaEvolve"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/inDeckY"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_tick"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/canMegaEvolve"
+        app:layout_constraintTop_toTopOf="@id/inDeck"
+        app:layout_constraintBottom_toBottomOf="@id/inDeck"/>
+
+    <Button
+        android:id="@+id/inDeckN"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_cross"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/canMegaEvolveY"
+        app:layout_constraintTop_toTopOf="@id/inDeck"
+        app:layout_constraintBottom_toBottomOf="@id/inDeck"/>
+
+    <Button
+        android:id="@+id/applyButton"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:text="Apply"
+        android:translationZ="8dp"
+        android:shadowRadius="32"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/resetButton"
+        app:layout_constraintTop_toBottomOf="@id/canMegaEvolve"/>
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:text="Reset"
+        android:translationZ="8dp"
+        android:shadowRadius="32"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/applyButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/canMegaEvolve"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

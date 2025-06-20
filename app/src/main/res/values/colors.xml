@@ -9,4 +9,6 @@
     <color name="red">#FF0000</color>
     <color name="skyBlue">#0080FF</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="modeYellowLight">#FFF080</color>
+    <color name="modeYellowDark">#FFE000</color>
 </resources>

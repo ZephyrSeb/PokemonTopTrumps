@@ -21,82 +21,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="150dp"
+    <ImageView
+        android:id="@+id/blueCard"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/icon_blue_card"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/bp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:shadowRadius="32"
-        android:text="Free Play"
+        android:text="0 BP"
+        android:textSize="14sp"
         android:textColor="@color/black"
-        android:fontFamily="@font/futura_medium_bt"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintTop_toTopOf="@id/blueCard"
+        app:layout_constraintBottom_toBottomOf="@id/blueCard"
+        app:layout_constraintEnd_toStartOf="@id/blueCard"/>
+
+    <Button
+        android:id="@+id/freePlayButton"
+        android:layout_width="192dp"
+        android:layout_height="144dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/mode_free_play"
         android:translationZ="8dp"
+        android:shadowRadius="32"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/classicButton"/>
 
     <Button
         android:id="@+id/classicButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:shadowRadius="32"
-        android:text="Classic Mode"
-        android:textColor="@color/black"
-        android:fontFamily="@font/futura_medium_bt"
+        android:layout_width="192dp"
+        android:layout_height="144dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/mode_classic"
         android:translationZ="8dp"
-        app:layout_constraintTop_toBottomOf="@id/startButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:shadowRadius="32"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/freePlayButton"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
-        android:id="@+id/rulesButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:shadowRadius="32"
-        android:text="Rules"
-        android:textColor="@color/black"
-        android:fontFamily="@font/futura_medium_bt"
+        android:id="@+id/campaignButton"
+        android:layout_width="192dp"
+        android:layout_height="144dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/mode_campaign"
         android:translationZ="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/classicButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:shadowRadius="32"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/freePlayButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/challengeButton"/>
 
     <Button
-        android:id="@+id/collectionButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:shadowRadius="32"
-        android:text="Collection"
-        android:textColor="@color/black"
-        android:fontFamily="@font/futura_medium_bt"
+        android:id="@+id/challengeButton"
+        android:layout_width="192dp"
+        android:layout_height="144dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/mode_challenge"
         android:translationZ="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/rulesButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/deckButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button"
         android:shadowRadius="32"
-        android:text="Deck Manager"
-        android:textColor="@color/black"
-        android:fontFamily="@font/futura_medium_bt"
-        android:translationZ="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/collectionButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/classicButton"
+        app:layout_constraintStart_toEndOf="@id/campaignButton"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/settingsButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_settings_black"
         android:shadowRadius="32"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
@@ -104,14 +108,94 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
-        android:id="@+id/settingsIcon"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="11sp"
+        android:translationZ="10dp"
+        android:layout_marginBottom="-4dp"
+        app:layout_constraintBottom_toBottomOf="@id/settingsButton"
+        app:layout_constraintStart_toStartOf="@id/settingsButton"
+        app:layout_constraintEnd_toEndOf="@id/settingsButton"/>
+
+    <Button
+        android:id="@+id/rulesButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/icon_settings_black"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_rules_black"
+        android:shadowRadius="32"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:translationZ="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/settingsButton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rules"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="11sp"
         android:translationZ="10dp"
-        app:layout_constraintEnd_toEndOf="@id/settingsButton"
-        app:layout_constraintBottom_toBottomOf="@id/settingsButton"
-        app:layout_constraintTop_toTopOf="@id/settingsButton"
-        app:layout_constraintStart_toStartOf="@id/settingsButton"/>
+        android:layout_marginBottom="-4dp"
+        app:layout_constraintBottom_toBottomOf="@id/rulesButton"
+        app:layout_constraintStart_toStartOf="@id/rulesButton"
+        app:layout_constraintEnd_toEndOf="@id/rulesButton"/>
+
+    <Button
+        android:id="@+id/deckButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_deck_black"
+        android:shadowRadius="32"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:translationZ="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rulesButton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Decks"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="11sp"
+        android:translationZ="10dp"
+        android:layout_marginBottom="-4dp"
+        app:layout_constraintBottom_toBottomOf="@id/deckButton"
+        app:layout_constraintStart_toStartOf="@id/deckButton"
+        app:layout_constraintEnd_toEndOf="@id/deckButton"/>
+
+    <Button
+        android:id="@+id/recordsButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/empty_button"
+        android:foreground="@drawable/icon_records_black"
+        android:shadowRadius="32"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:translationZ="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/deckButton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Records"
+        android:textColor="@color/black"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textSize="11sp"
+        android:translationZ="10dp"
+        android:layout_marginBottom="-4dp"
+        app:layout_constraintBottom_toBottomOf="@id/recordsButton"
+        app:layout_constraintStart_toStartOf="@id/recordsButton"
+        app:layout_constraintEnd_toEndOf="@id/recordsButton"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

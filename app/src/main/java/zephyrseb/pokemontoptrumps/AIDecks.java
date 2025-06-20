@@ -1,55 +1,45 @@
 package zephyrseb.pokemontoptrumps;
 
-public enum AIDecks {
-    TOWER_RAIN,
-    TOWER_SUN;
+import static zephyrseb.pokemontoptrumps.CardRegistry.*;
+import static zephyrseb.pokemontoptrumps.ItemRegistry.*;
 
-    /** @noinspection NonAsciiCharacters*/
-    public static Deck generateDeck(AIDecks deckName) {
-        Deck deck = new Deck("Deck");
-        if (deckName == TOWER_RAIN) {
-            deck.addCard(CardRegistry.BLASTOISE);
-            deck.addCard(CardRegistry.SWAMPERT);
-            deck.addCard(CardRegistry.POLIWAG);
-            deck.addCard(CardRegistry.POLIWHIRL);
-            deck.addCard(CardRegistry.POLIWRATH);
-            deck.addCard(CardRegistry.POLITOED);
-            deck.addCard(CardRegistry.WINGULL);
-            deck.addCard(CardRegistry.PELIPPER);
-            deck.addCard(CardRegistry.TYMPOLE);
-            deck.addCard(CardRegistry.PALPITOAD);
-            deck.addCard(CardRegistry.SEISMITOAD);
-            deck.addCard(CardRegistry.CHEWTLE);
-            deck.addCard(CardRegistry.DREDNAW);
-            deck.addCard(CardRegistry.GOLDEEN);
-            deck.addCard(CardRegistry.SEAKING);
-            deck.addCard(CardRegistry.FINNEON);
-            deck.addCard(CardRegistry.LUMINEON);
-            deck.addCard(CardRegistry.DUCKLETT);
-            deck.addCard(CardRegistry.SWANNA);
-            deck.addCard(CardRegistry.GYARADOS);
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public enum AIDecks {
+    TOWER_RAIN("rain", new CardRegistry[]{POLIWAG, POLIWHIRL, POLIWRATH, GOLDEEN, SEAKING, GYARADOS, POLITOED, LOTAD, LOMBRE, LUDICOLO, WINGULL, PELIPPER, SURSKIT, HUNTAIL, GOREBYSS, KYOGRE, TIRTOUGA, CARRACOSTA, DUCKLETT, SWANNA}, new ItemRegistry[]{FULL_RESTORE, X_SPECIAL, MYSTIC_WATER, DAMP_ROCK, GRIP_CLAW, ITEM_PRINTER}),
+    TOWER_SUN("sun", new CardRegistry[]{ODDISH, GLOOM, VILEPLUME, BELLSPROUT, WEEPINBELL, VICTREEBEL, SUNKERN, SUNFLORA, COMBUSKEN, BLAZIKEN, NUMEL, CAMERUPT, TORKOAL, GROUDON, TEPIG, EMBOAR, PIGNITE, SLITHER_WING, KORAIDON, CHARCADET}, new ItemRegistry[]{X_ATTACK, CHARCOAL, HEAT_ROCK, FLAME_ORB, ITEM_PRINTER, RAWST_BERRY}),
+    TOWER_SNOW("snow", new CardRegistry[]{ALOLAN_SANDSHREW, ALOLAN_SANDSLASH, ALOLAN_VULPIX, ALOLAN_NINETALES, SWINUB, PILOSWINE, SNORUNT, GLALIE, SPHEAL, SEALEO, WALREIN, SNOVER, ABOMASNOW, CUBCHOO, BEARTIC, AMAURA, AURORUS, FROSMOTH, MAMOSWINE, FROSLASS}, new ItemRegistry[]{FULL_RESTORE, ULTRA_BALL, X_EVASION, NEVER_MELT_ICE, ICY_ROCK, ITEM_PRINTER}),
+    TOWER_SANDSTORM("sandstorm", new CardRegistry[]{SANDSHREW, SANDSLASH, NIDORANM, NIDORANF, NIDORINA, NIDORINO, NIDOQUEEN, NIDOKING, PALDEAN_WOOPER, LARVITAR, PUPITAR, TYRANITAR, HIPPOPOTAS, HIPPOWDON, DRILBUR, EXCADRILL, LANDORUS_INCARNATE_FORME, LANDORUS_THERIAN_FORME, ROCKRUFF, LYCANROC_MIDNIGHT_FORM}, new ItemRegistry[]{FULL_RESTORE, ULTRA_BALL, SOFT_SAND, SMOOTH_ROCK, ROCKY_HELMET, ITEM_PRINTER}),
+    TOWER_GRASSY_TERRAIN("grassy_terrain", new CardRegistry[]{BULBASAUR, IVYSAUR, VENUSAUR, BUTTERFREE, BEEDRILL, PINSIR, DEERLING, SAWSBUCK, QUILLADIN, SKIDDO, GOGOAT, DARTRIX, COMFEY, TAPU_BULU, RILLABOOM, ORBEETLE, SMOLIV, DOLLIV, ARBOLIVA, DARTRIX}, new ItemRegistry[]{MIRACLE_SEED, GRASSY_SEED, GRIP_CLAW, ITEM_PRINTER, OCCA_BERRY, SALAC_BERRY}),
+    TOWER_ELECTRIC_TERRAIN("electric_terrain", new CardRegistry[]{ALOLAN_RAICHU, ALOLAN_GEODUDE, ALOLAN_GRAVELER, ALOLAN_GOLEM, VOLTORB, ELECTRODE, ELECTABUZZ, MAREEP, FLAAFFY, ELECTRIKE, PACHIRISU, ELECTIVIRE, JOLTIK, STUNFISK, CHARJABUG, PINCURCHIN, ARCTOZOLT, TADBULB, BELLIBOLT, MIRAIDON}, new ItemRegistry[]{ULTRA_BALL, MAGNET, ELECTRIC_SEED, LOADED_DICE, GRIP_CLAW, ITEM_PRINTER}),
+    TOWER_PSYCHIC_TERRAIN("psychic_terrain", new CardRegistry[]{ALAKAZAM, GALARIAN_PONYTA, GALARIAN_RAPIDASH, DROWZEE, GALARIAN_ARTICUNO, NATU, UNOWN, KIRLIA, SPOINK, MUNNA, MUSHARNA, GOTHITA, GOTHORITA, GOTHITELLE, ESPURR, MEOWSTIC, TAPU_LELE, COSMOEM, NECROZMA, INDEEDEE}, new ItemRegistry[]{X_SPECIAL, TWISTED_SPOON, CHOICE_SPECS, PSYCHIC_SEED, GRIP_CLAW, ULTRA_BALL}),
+    TOWER_MISTY_TERRAIN("misty_terrain", new CardRegistry[]{CLEFAIRY, CLEFABLE, GALARIAN_WEEZING, GARDEVOIR, COTTONEE, SPRITZEE, AROMATISSE, SWIRLIX, SLURPUFF, CARBINK, DIANCIE, MIMIKYU, HATENNA, HATTREM, HATTERENE, ALCREMIE, ENAMORUS_INCARNATE_FORME, ENAMORUS_THERIAN_FORME, FIDOUGH, DACHSBUN}, new ItemRegistry[]{FULL_RESTORE, X_SPECIAL, FAIRY_FEATHER, MISTY_SEED, QUICK_CLAW, ITEM_PRINTER}),
+    TOWER_DARKNESS("darkness", new CardRegistry[]{MURKROW, SNEASEL, POOCHYENA, GALARIAN_ZIGZAGOON, GALARIAN_LINOONE, SHEDINJA, SABLEYE, ABSOL, WEAVILE, GARBODOR, ZORUA, ZOROARK, DAWN_WINGS_NECROZMA, NICKIT, IMPIDIMP, MORGREM, GRIMMSNARL, MASCHIFF, MABOSSTIFF, KINGAMBIT}, new ItemRegistry[]{POTION, BLACK_GLASSES, GRIP_CLAW, SCOPE_LENS, ITEM_PRINTER, LANSAT_BERRY}),
+    TOWER_TRICK_ROOM("trick_room", new CardRegistry[]{CATERPIE, WEEDLE, SLOWPOKE, GALARIAN_SLOWPOKE, SLOWBRO, GALARIAN_SLOWBRO, PALDEAN_WOOPER, SLOWKING, GALARIAN_SLOWKING, GIRAFARIG, WURMPLE, RALTS, BELDUM, BRONZOR, SOLOSIS, DUOSION, REUNICLUS, SCATTERBUG, ZYGARDE_CELL, WOOPER}, new ItemRegistry[]{POKE_BALL, IRON_BALL, ROOM_SERVICE, QUICK_CLAW, BLACK_SLUDGE, ITEM_PRINTER}),
+    TOWER_WIND("wind", new CardRegistry[]{PIDGEY, PIDGEOTTO, PIDGEOT, SPEAROW, FEAROW, CHANSEY, HOPPIP, SKIPLOOM, JUMPLUFF, YANMA, TAILLOW, SWELLOW, RAYQUAZA, BIDOOF, DRIFLOON, DRIFBLIM, YANMEGA, PIDOVE, TORNADUS_INCARNATE_FORME, TORNADUS_THERIAN_FORME}, new ItemRegistry[]{SILK_SCARF, CHOICE_SCARF, SCOPE_LENS, QUICK_CLAW, ITEM_PRINTER, X_SPEED}),
+    TOWER_BERRIES("berries", new CardRegistry[]{EXEGGCUTE, EXEGGUTOR, ALOLAN_EXEGGUTOR, GULPIN, SWALOT, CHERUBI, MUNCHLAX, PANPOUR, PANSAGE, PANSEAR, SIMIPOUR, SIMISAGE, SIMISEAR, HEATMOR, APPLIN, FLAPPLE, APPLETUN, DIPPLIN, HYDRAPPLE, TROPIUS}, new ItemRegistry[]{LUM_BERRY, SITRUS_BERRY, OCCA_BERRY, LIECHI_BERRY, SALAC_BERRY, BERRY_POT}),
+    TOWER_DANCER("dancer", new CardRegistry[]{BELLOSSOM, PETILIL, LILLIGANT, HISUIAN_LILLIGANT, ORICORIO_BAILE_STYLE, ORICORIO_PAU_STYLE, ORICORIO_SENSU_STYLE, ORICORIO_POM_POM_STYLE, SHELLDER, CLOYSTER, MINCCINO, CINCCINO, PORYGON, PIPLUP, PRINPLUP, OSHAWOTT, DEWOTT, FUECOCO, CROCALOR, TORCHIC}, new ItemRegistry[]{X_SPECIAL, CHOICE_SPECS, GRIP_CLAW, METRONOME, ITEM_PRINTER, SALAC_BERRY});
+
+    public final String name;
+    public final List<CardRegistry> cardDeck;
+    public final List<ItemRegistry> itemDeck;
+
+    AIDecks(String n, CardRegistry[] cr, ItemRegistry[] ir) {
+        name = n;
+        cardDeck = new ArrayList<>();
+        cardDeck.addAll(Arrays.asList(cr));
+        itemDeck = new ArrayList<>();
+        itemDeck.addAll(Arrays.asList(ir));
+    }
+    public Deck generateDeck() {
+        Deck deck = new Deck(name);
+        for (CardRegistry cr : cardDeck) {
+            deck.addCard(cr);
         }
-        if (deckName == TOWER_SUN) {
-            deck.addCard(CardRegistry.CHARIZARD);
-            deck.addCard(CardRegistry.BLAZIKEN);
-            deck.addCard(CardRegistry.TORKOAL);
-            deck.addCard(CardRegistry.NUMEL);
-            deck.addCard(CardRegistry.CAMERUPT);
-            deck.addCard(CardRegistry.SUNFLORA);
-            deck.addCard(CardRegistry.SUNKERN);
-            deck.addCard(CardRegistry.ODDISH);
-            deck.addCard(CardRegistry.GLOOM);
-            deck.addCard(CardRegistry.VILEPLUME);
-            deck.addCard(CardRegistry.FOMANTIS);
-            deck.addCard(CardRegistry.LURANTIS);
-            deck.addCard(CardRegistry.HELIOPTILE);
-            deck.addCard(CardRegistry.HELIOLISK);
-            deck.addCard(CardRegistry.SEWADDLE);
-            deck.addCard(CardRegistry.SWADLOON);
-            deck.addCard(CardRegistry.LEAVANNY);
-            deck.addCard(CardRegistry.FLABEBE);
-            deck.addCard(CardRegistry.FLOETTE);
-            deck.addCard(CardRegistry.FLORGES);
+        for (ItemRegistry ir : itemDeck) {
+            deck.addItem(ir);
         }
         return deck;
     }

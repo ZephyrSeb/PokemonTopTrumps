@@ -28,6 +28,7 @@
         <activity android:name=".Screens.DeckBuilderScreen"/>
         <activity android:name=".Screens.DeckRegistryScreen"/>
         <activity android:name=".Screens.GameSetupScreen"/>
+        <activity android:name=".Screens.ChallengeScreen"/>
     </application>
 
 </manifest>

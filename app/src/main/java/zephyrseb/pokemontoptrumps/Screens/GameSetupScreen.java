@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,10 +44,31 @@ public class GameSetupScreen extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+        final Handler handler = new Handler(Looper.getMainLooper());
+
+        final String mode;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            mode = extras.getString("mode");
+        }
+        else {
+            mode = "free_play";
+        }
+
+        String text = switch (mode) {
+            case "battle_tower" -> "Battle Tower";
+            case "battle_factory" -> "Battle Factory";
+            case "battle_arcade" -> "Battle Arcade";
+            case "battle_dojo" -> "Battle Dojo";
+            case "battle_stage" -> "Battle Stage";
+            default -> "Free Play";
+        };
+        ((TextView)findViewById(R.id.mode)).setText(text);
 
         SaveData playerData = new SaveData();
         playerData = playerData.readFile(this);
         List<Deck> deckList = playerData.getDeckList();
+        ((TextView)findViewById(R.id.winStreakText)).setText(Integer.toString(playerData.getWinStreak(mode)));
 
         displayDeck(findViewById(R.id.deckPreview), null);
 
@@ -86,28 +108,35 @@ public class GameSetupScreen extends AppCompatActivity {
         Intent intentStart = new Intent(this, GameScreen.class);
         Button startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(v -> {
-            intentStart.putExtra("mode", "free_play");
+            intentStart.putExtra("mode", mode);
             intentStart.putExtra("deck", deckJSON);
             Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
             startButton.startAnimation(buttonPulse);
             if (selectedDeck != null) {
-                if (selectedDeck.validate(this, "free_play")) {
-                    startActivity(intentStart);
-                }
-                else {
-                    Toast toast = Toast.makeText(this, "Invalid deck", Toast.LENGTH_SHORT);
-                    toast.show();
+                if (selectedDeck.validate(this, mode)) {
+                    handler.postDelayed(() -> startActivity(intentStart), 400);
                 }
             }
         });
 
-        Intent intentBack = new Intent(this, StartScreen.class);
-        Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> {
-            Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
-            backButton.startAnimation(buttonPulse);
-            startActivity(intentBack);
-        });
+        if (mode.equals("free_play")) {
+            Intent intentBack = new Intent(this, StartScreen.class);
+            Button backButton = findViewById(R.id.backButton);
+            backButton.setOnClickListener(v -> {
+                Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
+                backButton.startAnimation(buttonPulse);
+                handler.postDelayed(() -> startActivity(intentBack), 400);
+            });
+        }
+        else {
+            Intent intentBack = new Intent(this, ChallengeScreen.class);
+            Button backButton = findViewById(R.id.backButton);
+            backButton.setOnClickListener(v -> {
+                Animation buttonPulse = AnimationUtils.loadAnimation(this, R.anim.button_press);
+                backButton.startAnimation(buttonPulse);
+                handler.postDelayed(() -> startActivity(intentBack), 400);
+            });
+        }
     }
 
     private void updateSelectedDeck(Deck deck) {

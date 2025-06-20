@@ -4,8 +4,6 @@ import androidx.annotation.Nullable;
 
 import java.util.Random;
 
-import zephyrseb.pokemontoptrumps.Screens.GameScreen;
-
 public class EffectAction {
     private Effect effect;
     private Player user;
@@ -41,7 +39,7 @@ public class EffectAction {
         return random;
     }
 
-    public void applyEffect(GameScreen game) {
+    public void applyEffect(Game game) {
         effect.applyEffect(game, user, opponent);
     }
 }
